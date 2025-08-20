@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Karni Interiors
+
+A modern interior design portfolio website built with Next.js, featuring an admin panel for content management.
+
+## Features
+
+- **Portfolio Showcase**: Display interior design projects with image galleries
+- **Client Reviews**: Testimonials and ratings from satisfied clients
+- **Contact System**: Contact form with email notifications
+- **Admin Panel**: Complete CMS for managing projects, reviews, and contacts
+- **Responsive Design**: Mobile-first approach with modern UI
+- **SEO Optimized**: Built-in SEO features and meta tags
+
+## Tech Stack
+
+- **Framework**: Next.js 14 with App Router
+- **Database**: PostgreSQL with Prisma ORM
+- **Authentication**: NextAuth.js
+- **Styling**: Tailwind CSS + shadcn/ui components
+- **Email**: Resend for transactional emails
+- **File Upload**: Cloudinary for image management
+- **Deployment**: Vercel (recommended)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
+- Node.js 18+ 
+- PostgreSQL database
+- Cloudinary account (for image uploads)
+- Resend account (for emails)
+
+### Installation
+
+1. Clone the repository:
+git clone <your-repo-url>
+cd karni-interiors
+
+text
+
+2. Install dependencies:
+npm install
+
+text
+
+3. Set up environment variables:
+cp .env.example .env.local
+
+text
+
+4. Update `.env.local` with your credentials:
+- Database connection string
+- NextAuth secret
+- Cloudinary credentials  
+- Resend API key
+
+5. Set up the database:
+npx prisma migrate dev
+
+text
+
+6. Seed the database (optional):
+npm run db:seed
+
+text
+
+7. Start the development server:
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+text
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Visit [http://localhost:3000](http://localhost:3000) to see the application.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Admin Panel
 
-## Learn More
+Access the admin panel at `/admin` with these default credentials:
+- **Email**: admin@karniinteriors.com
+- **Password**: admin123
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run type-check` - Run TypeScript checks
+- `npm run db:migrate` - Run database migrations
+- `npm run db:seed` - Seed database with sample data
+- `npm run db:studio` - Open Prisma Studio
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+karni-interiors/
+├── app/ # Next.js 14 app directory
+├── components/ # React components
+├── lib/ # Utilities and configurations
+├── prisma/ # Database schema and migrations
+├── public/ # Static assets
+├── styles/ # CSS files
+├── types/ # TypeScript type definitions
+└── emails/ # Email templates
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+text
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+### Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy automatically on every push
+
+### Manual Deployment
+
+1. Build the application:
+npm run build
+
+text
+
+2. Start the production server:
+npm start
+
+text
+
+## Environment Variables
+
+See `.env.example` for required environment variables.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.
