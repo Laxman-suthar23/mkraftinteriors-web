@@ -4,13 +4,14 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function GET(request: NextRequest, { params }: Props) {
   try {
+    const resolvedParams = await params;
     const teamMember = await prisma.teamMember.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
     });
 
     if (!teamMember) {
@@ -40,8 +41,9 @@ export async function PUT(request: NextRequest, { params }: Props) {
 
     const body = await request.json();
     
+    const resolvedParams = await params;
     const teamMember = await prisma.teamMember.update({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       data: body,
     });
 
@@ -63,8 +65,9 @@ export async function DELETE(request: NextRequest, { params }: Props) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const resolvedParams = await params;
     await prisma.teamMember.delete({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
     });
 
     return NextResponse.json({ message: "Team member deleted successfully" });

@@ -16,9 +16,10 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ['@prisma/client'],
-  },
+
+  // ✅ Updated: moved out of `experimental`
+  serverExternalPackages: ['@prisma/client'],
+
   async redirects() {
     return [
       {
@@ -28,6 +29,7 @@ const nextConfig = {
       },
     ];
   },
+
   async headers() {
     return [
       {
@@ -49,6 +51,6 @@ const nextConfig = {
       },
     ];
   },
-}
+};
 
 module.exports = nextConfig;

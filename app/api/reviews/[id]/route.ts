@@ -4,13 +4,14 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function GET(request: NextRequest, { params }: Props) {
   try {
+    const resolvedParams = await params;
     const review = await prisma.review.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
     });
 
     if (!review) {
@@ -37,16 +38,16 @@ export async function PUT(request: NextRequest, { params }: Props) {
 
     const body = await request.json();
     
+    const resolvedParams = await params;
     const review = await prisma.review.update({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       data: {
         name: body.name,
         email: body.email, // ✅ new field
         rating: body.rating,
         review: body.review,
         projectId: body.projectId || null,
-      }
- ,
+      },
     });
 
     return NextResponse.json(review);
@@ -67,8 +68,9 @@ export async function DELETE(request: NextRequest, { params }: Props) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const resolvedParams = await params;
     await prisma.review.delete({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
     });
 
     return NextResponse.json({ message: "Review deleted successfully" });

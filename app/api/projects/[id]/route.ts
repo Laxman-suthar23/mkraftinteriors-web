@@ -5,13 +5,14 @@ import { prisma } from "@/lib/prisma";
 import { ProjectSchema } from "@/types/project";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function GET(request: NextRequest, { params }: Props) {
   try {
+    const resolvedParams = await params;
     const project = await prisma.project.findUnique({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
     });
 
     if (!project) {
@@ -39,8 +40,9 @@ export async function PUT(request: NextRequest, { params }: Props) {
     const body = await request.json();
     const validatedData = ProjectSchema.parse(body);
 
+    const resolvedParams = await params;
     const project = await prisma.project.update({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
       data: {
         ...validatedData,
         date: new Date(validatedData.date),
@@ -65,8 +67,9 @@ export async function DELETE(request: NextRequest, { params }: Props) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const resolvedParams = await params;
     await prisma.project.delete({
-      where: { id: params.id },
+      where: { id: resolvedParams.id },
     });
 
     return NextResponse.json({ message: "Project deleted successfully" });

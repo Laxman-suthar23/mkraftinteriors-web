@@ -14,7 +14,7 @@ import { Project } from "@/types";
 import { formatDate } from "@/lib/utils";
 
 interface ProjectPageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default function ProjectPage({ params }: ProjectPageProps) {
@@ -22,11 +22,23 @@ export default function ProjectPage({ params }: ProjectPageProps) {
   const [loading, setLoading] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [projectId, setProjectId] = useState<string | null>(null);
 
   useEffect(() => {
+    const getParams = async () => {
+      const resolvedParams = await params;
+      setProjectId(resolvedParams.id);
+    };
+    
+    getParams();
+  }, [params]);
+
+  useEffect(() => {
+    if (!projectId) return;
+
     const fetchProject = async () => {
       try {
-        const response = await fetch(`/api/projects/${params.id}`);
+        const response = await fetch(`/api/projects/${projectId}`);
         if (response.ok) {
           const data = await response.json();
           setProject(data);
@@ -39,14 +51,14 @@ export default function ProjectPage({ params }: ProjectPageProps) {
     };
 
     fetchProject();
-  }, [params.id]);
+  }, [projectId]);
 
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
     setLightboxOpen(true);
   };
 
-  if (loading) {
+  if (loading || !projectId) {
     return (
       <>
         <Header />
