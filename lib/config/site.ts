@@ -1,0 +1,43 @@
+export const siteConfig = {
+  name: "Karni Interiors",
+  description: "Premium interior design services creating beautiful, functional spaces that reflect your unique lifestyle and personality.",
+  url: "https://karniinteriors.com",
+  ogImage: "/images/og-image.jpg",
+  creator: "@karniinteriors",
+  keywords: [
+    "interior design",
+    "luxury interiors",
+    "home design",
+    "commercial design",
+    "residential design",
+    "modern interiors",
+    "space planning",
+    "interior decoration",
+  ],
+  links: {
+    twitter: "https://twitter.com/karniinteriors",
+    instagram: "https://instagram.com/karniinteriors",
+    facebook: "https://facebook.com/karniinteriors",
+    linkedin: "https://linkedin.com/company/karniinteriors",
+  },
+  contact: {
+    email: "info@karniinteriors.com",
+    phone: "+1 (555) 123-4567",
+    address: {
+      street: "123 Design District, Suite 456",
+      city: "Los Angeles",
+      state: "CA",
+      zip: "90028",
+      full: "123 Design District, Suite 456, Los Angeles, CA 90028",
+    },
+  },
+  businessHours: {
+    monday: "9:00 AM - 6:00 PM",
+    tuesday: "9:00 AM - 6:00 PM",
+    wednesday: "9:00 AM - 6:00 PM",
+    thursday: "9:00 AM - 6:00 PM",
+    friday: "9:00 AM - 6:00 PM",
+    saturday: "10:00 AM - 4:00 PM",
+    sunday: "Closed",
+  },
+} as const;

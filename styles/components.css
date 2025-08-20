@@ -1,0 +1,416 @@
+/* Karni Interiors Component Styles */
+
+/* Hero Section */
+.hero-section {
+  @apply relative min-h-screen flex items-center justify-center overflow-hidden;
+}
+
+.hero-background {
+  @apply absolute inset-0 z-0;
+}
+
+.hero-background::before {
+  content: '';
+  @apply absolute inset-0 bg-black/40 z-10;
+}
+
+.hero-content {
+  @apply relative z-20 text-center text-white;
+}
+
+/* Portfolio Grid */
+.portfolio-grid {
+  @apply grid gap-6;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+@media (min-width: 768px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Team Grid */
+.team-grid {
+  @apply grid gap-8;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+@media (min-width: 1024px) {
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Review Cards */
+.review-card {
+  @apply bg-card rounded-lg p-6 shadow-sm border hover:shadow-md transition-shadow duration-300;
+}
+
+.review-card .quote-icon {
+  @apply text-primary/30 w-8 h-8 mb-4;
+}
+
+.review-stars {
+  @apply flex items-center space-x-1 mb-4;
+}
+
+.review-content {
+  @apply text-muted-foreground leading-relaxed mb-6;
+}
+
+.review-author {
+  @apply border-t pt-4 mt-6;
+}
+
+/* Contact Form */
+.contact-form {
+  @apply space-y-6;
+}
+
+.form-group {
+  @apply space-y-2;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-foreground;
+}
+
+.form-input {
+  @apply w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors;
+}
+
+.form-textarea {
+  @apply w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors resize-vertical;
+}
+
+.form-button {
+  @apply w-full bg-primary text-primary-foreground py-3 px-6 rounded-md hover:bg-primary/90 transition-colors font-medium;
+}
+
+/* Gallery */
+.gallery-masonry {
+  column-count: 1;
+  column-gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .gallery-masonry {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery-masonry {
+    column-count: 3;
+  }
+}
+
+@media (min-width: 1280px) {
+  .gallery-masonry {
+    column-count: 4;
+  }
+}
+
+.gallery-item {
+  @apply break-inside-avoid mb-4 rounded-lg overflow-hidden cursor-pointer group relative;
+}
+
+.gallery-item img {
+  @apply w-full h-auto transition-transform duration-300 group-hover:scale-105;
+}
+
+.gallery-overlay {
+  @apply absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/40;
+}
+
+.gallery-caption {
+  @apply absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full transition-transform duration-300 group-hover:translate-y-0;
+}
+
+/* Lightbox */
+.lightbox-overlay {
+  @apply fixed inset-0 bg-black/90 z-50 flex items-center justify-center;
+}
+
+.lightbox-content {
+  @apply relative max-w-full max-h-full p-4;
+}
+
+.lightbox-image {
+  @apply max-w-full max-h-full object-contain;
+}
+
+.lightbox-close {
+  @apply absolute top-4 right-4 text-white hover:text-gray-300 text-2xl cursor-pointer;
+}
+
+.lightbox-nav {
+  @apply absolute top-1/2 transform -translate-y-1/2 text-white text-3xl cursor-pointer hover:text-gray-300;
+}
+
+.lightbox-prev {
+  @apply left-4;
+}
+
+.lightbox-next {
+  @apply right-4;
+}
+
+/* Navigation */
+.main-nav {
+  @apply hidden md:flex items-center space-x-8;
+}
+
+.nav-item {
+  @apply relative text-foreground hover:text-primary transition-colors duration-200;
+}
+
+.nav-item.active {
+  @apply text-primary;
+}
+
+.nav-item::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300;
+}
+
+.nav-item:hover::after,
+.nav-item.active::after {
+  @apply w-full;
+}
+
+.mobile-nav {
+  @apply md:hidden fixed inset-0 bg-background z-40 transform transition-transform duration-300;
+}
+
+.mobile-nav.closed {
+  @apply -translate-x-full;
+}
+
+.mobile-nav.open {
+  @apply translate-x-0;
+}
+
+.mobile-nav-list {
+  @apply flex flex-col space-y-4 p-6 pt-20;
+}
+
+.mobile-nav-item {
+  @apply block py-2 text-lg font-medium text-foreground hover:text-primary transition-colors;
+}
+
+/* Footer */
+.footer {
+  @apply bg-muted/50 border-t;
+}
+
+.footer-content {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-8 py-12;
+}
+
+.footer-section h3 {
+  @apply text-lg font-semibold mb-4;
+}
+
+.footer-links {
+  @apply space-y-2;
+}
+
+.footer-link {
+  @apply block text-muted-foreground hover:text-foreground transition-colors;
+}
+
+.footer-social {
+  @apply flex space-x-4;
+}
+
+.social-link {
+  @apply w-10 h-10 bg-muted rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-colors;
+}
+
+/* Admin Layout */
+.admin-layout {
+  @apply min-h-screen bg-muted/30;
+}
+
+.admin-sidebar {
+  @apply fixed left-0 top-0 h-full w-64 bg-card border-r z-40 transform transition-transform duration-300;
+}
+
+@media (max-width: 768px) {
+  .admin-sidebar {
+    @apply -translate-x-full;
+  }
+  
+  .admin-sidebar.open {
+    @apply translate-x-0;
+  }
+}
+
+.admin-main {
+  @apply ml-0 md:ml-64 p-6;
+}
+
+.admin-header {
+  @apply flex items-center justify-between mb-6;
+}
+
+.admin-content {
+  @apply bg-card rounded-lg border shadow-sm;
+}
+
+/* Data Tables */
+.data-table {
+  @apply w-full border-collapse;
+}
+
+.data-table th {
+  @apply px-4 py-3 text-left font-medium text-muted-foreground border-b bg-muted/50;
+}
+
+.data-table td {
+  @apply px-4 py-3 border-b border-muted;
+}
+
+.data-table tr:hover {
+  @apply bg-muted/50;
+}
+
+/* Status Badges */
+.badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.badge-new {
+  @apply bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300;
+}
+
+.badge-contacted {
+  @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300;
+}
+
+.badge-closed {
+  @apply bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300;
+}
+
+.badge-featured {
+  @apply bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300;
+}
+
+/* Loading States */
+.loading-skeleton {
+  @apply animate-pulse bg-muted rounded;
+}
+
+.loading-text {
+  @apply h-4 bg-muted rounded w-3/4;
+}
+
+.loading-title {
+  @apply h-6 bg-muted rounded w-1/2 mb-2;
+}
+
+.loading-paragraph {
+  @apply space-y-2;
+}
+
+.loading-paragraph .loading-text:last-child {
+  @apply w-1/3;
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+.slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+.scale-in {
+  animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Hover Effects */
+.hover-lift {
+  @apply transition-transform duration-300 hover:-translate-y-1;
+}
+
+.hover-shadow {
+  @apply transition-shadow duration-300 hover:shadow-lg;
+}
+
+.hover-scale {
+  @apply transition-transform duration-300 hover:scale-105;
+}
+
+/* Focus States */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+}
+
+/* Responsive Utilities */
+.container-sm {
+  @apply max-w-2xl mx-auto px-4;
+}
+
+.container-md {
+  @apply max-w-4xl mx-auto px-4;
+}
+
+.container-lg {
+  @apply max-w-6xl mx-auto px-4;
+}
+
+.container-xl {
+  @apply max-w-7xl mx-auto px-4;
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-hidden {
+    visibility: hidden;
+  }
+  
+  .print-break {
+    page-break-after: always;
+  }
+}

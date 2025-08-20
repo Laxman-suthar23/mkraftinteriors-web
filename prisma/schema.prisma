@@ -1,0 +1,97 @@
+// prisma/schema.prisma
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  admin
+  user
+}
+
+enum ProjectType {
+  Residential
+  Commercial
+  Hospitality
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      UserRole @default(admin)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Project {
+  id              String    @id @default(cuid())
+  title           String
+  description     String
+  fullDescription String?
+  location        String
+  date            DateTime
+  client          String
+  type            ProjectType
+  featured        Boolean   @default(false)
+  images          String[]
+  mainImage       String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  reviews         Review[]  // One-to-many relation with Review
+
+  @@map("projects")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   // New email field
+  rating    Int
+  review    String
+  
+  projectId String?  
+  project   Project? @relation(fields: [projectId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("reviews")
+}
+
+
+model ContactSubmission {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  projectType String
+  message     String
+  status      String   @default("new")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("contact_submissions")
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  bio       String
+  image     String
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("team_members")
+}

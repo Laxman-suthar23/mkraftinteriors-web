@@ -1,0 +1,7 @@
+<Image 
+  src="/logo.png" 
+  alt="Karni Interiors Logo" 
+  width={120} 
+  height={60} 
+  priority
+/>
