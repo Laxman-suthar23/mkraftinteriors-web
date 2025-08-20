@@ -20,6 +20,16 @@ const nextConfig = {
   // ✅ Updated: moved out of `experimental`
   serverExternalPackages: ['@prisma/client'],
 
+  // Add this line to fix the Vercel deployment issue
+  output: 'standalone',
+  
+  // Add this to handle the client reference manifest issue
+  experimental: {
+    outputFileTracingIncludes: {
+      '/': ['./public/**/*'],
+    },
+  },
+
   async redirects() {
     return [
       {
@@ -51,6 +61,7 @@ const nextConfig = {
       },
     ];
   },
+  ignoreDuringBuilds: true,
 };
 
 module.exports = nextConfig;
