@@ -52,7 +52,7 @@ const statCards = [
     key: "totalTeamMembers" as keyof DashboardStats,
     icon: Users,
     color: "text-purple-600",
-    href: "/admin/team",
+    href: "/admin/dashboard",
   },
 ];
 
