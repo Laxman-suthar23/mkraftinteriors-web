@@ -20,9 +20,6 @@ export const metadata: Metadata = {
     default: "Karni Interiors - Designing Spaces, Creating Stories",
     template: "%s | Karni Interiors",
   },
-  icons: {
-    icon: "/favicon.ico", // ✅ make sure favicon.ico is inside /public
-  },
   description:
     "Premium interior crafting services, turning designs into beautiful, functional spaces that reflect your lifestyle and personality. Transform your space with Karni Interiors.",
   keywords: [
@@ -46,7 +43,7 @@ export const metadata: Metadata = {
       "Premium interior design services creating beautiful, functional spaces that reflect your unique lifestyle and personality.",
     images: [
       {
-        url: "public/logo.svg",
+        url: "public/favicon.ico",
         width: 1200,
         height: 630,
         alt: "Karni Interiors - Premium Interior Crafting",
