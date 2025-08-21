@@ -29,7 +29,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
       const resolvedParams = await params;
       setProjectId(resolvedParams.id);
     };
-    
+
     getParams();
   }, [params]);
 
@@ -126,7 +126,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
-              className="relative h-[60vh] rounded-lg overflow-hidden cursor-pointer"
+              className="relative h-[80vh] rounded-lg overflow-hidden cursor-pointer"
               onClick={() => openLightbox(0)}
             >
               <Image
@@ -160,10 +160,12 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                   <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
                     {project.description}
                   </p>
-                  
+
                   {project.fullDescription && (
                     <div className="prose prose-lg max-w-none">
-                      <p className="leading-relaxed">{project.fullDescription}</p>
+                      <p className="leading-relaxed">
+                        {project.fullDescription}
+                      </p>
                     </div>
                   )}
                 </motion.div>
@@ -178,7 +180,9 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 >
                   <Card>
                     <CardContent className="p-6">
-                      <h3 className="font-semibold text-lg mb-6">Project Details</h3>
+                      <h3 className="font-semibold text-lg mb-6">
+                        Project Details
+                      </h3>
                       <div className="space-y-4">
                         <div className="flex items-center space-x-3">
                           <Calendar className="h-5 w-5 text-muted-foreground" />
@@ -189,7 +193,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                             </div>
                           </div>
                         </div>
-                        
+
                         <div className="flex items-center space-x-3">
                           <MapPin className="h-5 w-5 text-muted-foreground" />
                           <div>
@@ -199,7 +203,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                             </div>
                           </div>
                         </div>
-                        
+
                         <div className="flex items-center space-x-3">
                           <User className="h-5 w-5 text-muted-foreground" />
                           <div>
@@ -209,7 +213,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                             </div>
                           </div>
                         </div>
-                        
+
                         <div className="flex items-center space-x-3">
                           <ExternalLink className="h-5 w-5 text-muted-foreground" />
                           <div>
@@ -223,9 +227,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
 
                       <div className="mt-8 pt-6 border-t">
                         <Link href="/contact">
-                          <Button className="w-full">
-                            Start Your Project
-                          </Button>
+                          <Button className="w-full">Start Your Project</Button>
                         </Link>
                       </div>
                     </CardContent>

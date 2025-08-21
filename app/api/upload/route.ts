@@ -1,6 +1,12 @@
 // app/api/upload/route.ts
 
 // Disable Next.js default JSON body parser for multipart/form-data
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";

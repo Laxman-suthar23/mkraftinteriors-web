@@ -22,7 +22,7 @@ const navigation = [
   { name: "Projects", href: "/admin/projects", icon: FolderOpen },
   { name: "Reviews", href: "/admin/reviews", icon: Star },
   { name: "Contacts", href: "/admin/contacts", icon: MessageSquare },
-  { name: "Team", href: "/admin/team", icon: Users },
+  { name: "Team", href: "", icon: Users },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
@@ -58,10 +58,10 @@ export default function AdminSidebar() {
           {/* Logo */}
           <div className="flex items-center justify-center h-16 border-b">
             <Link href="/admin/dashboard" className="flex items-center space-x-2">
-              <div className="text-xl font-serif font-bold text-primary">
+              <div className="text-xl font-serif font-bold text-red-500">
                 Karni
               </div>
-              <div className="text-xl font-serif font-light">Admin</div>
+              <div className="text-xl font-serif font-light">Interiors Admin</div>
             </Link>
           </div>
 

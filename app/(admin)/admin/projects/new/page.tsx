@@ -53,36 +53,68 @@ export default function NewProjectPage() {
   const featured = watch("featured");
   const type = watch("type");
 
+  // Fixed image upload handler
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    for (const file of files) {
-      const formData = new FormData();
-      formData.append("file", file);
+    if (files.length === 0) return;
 
-      try {
-        const response = await fetch("/api/upload", {
+    console.log("🖼️ Uploading", files.length, "images");
+
+    try {
+      // Upload all images in parallel
+      const uploadPromises = files.map(async (file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const res = await fetch("/api/upload", {
           method: "POST",
           body: formData,
         });
 
-        const json = await response.json();
-        const imageUrl = json.url || json.secure_url;
-        if (!imageUrl) continue;
-
-        // Update local state
-        const updatedImages = [...uploadedImages, imageUrl];
-        setUploadedImages(updatedImages);
-
-        // Update form state for validation
-        setValue("images", updatedImages, { shouldValidate: true });
-        if (updatedImages.length === 1) {
-          // First image becomes main by default
-          setMainImageIndex(0);
-          setValue("mainImage", imageUrl, { shouldValidate: true });
+        if (!res.ok) {
+          console.error("❌ Upload failed for", file.name);
+          return null;
         }
-      } catch (error) {
-        console.error("Error uploading image:", error);
+
+        const { url } = await res.json();
+        return url as string;
+      });
+
+      // Wait for all to finish and filter out failures
+      const newUrls = (await Promise.all(uploadPromises)).filter(
+        Boolean
+      ) as string[];
+      if (newUrls.length === 0) {
+        console.error("❌ No images uploaded");
+        return;
       }
+
+      // Append all new URLs at once
+      setUploadedImages((prev) => {
+        const all = [...prev, ...newUrls];
+        // Ensure mainImageIndex is valid (default to 0 if first upload)
+        if (prev.length === 0) {
+          setMainImageIndex(0);
+        }
+
+        // Update form values
+        setValue("images", all, { shouldValidate: true });
+        setValue("mainImage", all[prev.length === 0 ? 0 : mainImageIndex], {
+          shouldValidate: true,
+        });
+
+        return all;
+      });
+
+      // Reset input safely - check if element exists first
+      const inputElement = e.target;
+      if (inputElement) {
+        inputElement.value = "";
+      }
+    } catch (error) {
+      console.error("❌ Error uploading images:", error);
+      setSubmitStatus("error");
+      setErrorMessage("Failed to upload images. Please try again.");
     }
   };
 
@@ -128,6 +160,8 @@ export default function NewProjectPage() {
         mainImage: uploadedImages[mainImageIndex] || uploadedImages[0],
       };
 
+      console.log("📤 Submitting project data:", projectData);
+
       const response = await fetch("/api/projects", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -136,21 +170,28 @@ export default function NewProjectPage() {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        setSubmitStatus("error");
-        setErrorMessage(
+        throw new Error(
           errorData.error || `Request failed with status ${response.status}`
         );
-        return;
       }
+
+      const result = await response.json();
+      console.log("✅ Project created successfully:", result);
 
       setSubmitStatus("success");
       setErrorMessage("");
+
       setTimeout(() => {
         router.push("/admin/projects");
       }, 2000);
     } catch (error) {
+      console.error("❌ Error creating project:", error);
       setSubmitStatus("error");
-      setErrorMessage(error instanceof Error ? error.message : "Unknown error");
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Unknown error occurred while creating the project"
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -183,8 +224,6 @@ export default function NewProjectPage() {
           {...register("featured")}
           value={featured?.toString() || "false"}
         />
-        <input type="hidden" {...register("images")} />
-        <input type="hidden" {...register("mainImage")} />
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Section */}
@@ -228,7 +267,7 @@ export default function NewProjectPage() {
                   <div>
                     <Label htmlFor="type">Project Type *</Label>
                     <Select
-                      defaultValue="Residential"
+                      value={type}
                       onValueChange={(value) =>
                         setValue(
                           "type",
@@ -298,6 +337,7 @@ export default function NewProjectPage() {
                     id="description"
                     {...register("description")}
                     rows={3}
+                    placeholder="Brief description of the project..."
                   />
                   {errors.description && (
                     <p className="text-sm text-red-500">
@@ -312,6 +352,7 @@ export default function NewProjectPage() {
                     id="fullDescription"
                     {...register("fullDescription")}
                     rows={6}
+                    placeholder="Detailed description of the project, design approach, materials used, etc..."
                   />
                 </div>
               </CardContent>
@@ -325,7 +366,7 @@ export default function NewProjectPage() {
               <CardContent className="space-y-4">
                 <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center">
                   <Upload className="h-8 w-8 mx-auto mb-4 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-muted-foreground mb-4">
                     Upload project images (JPG, PNG up to 10MB each)
                   </p>
                   <input
@@ -359,7 +400,7 @@ export default function NewProjectPage() {
                             sizes="200px"
                             className="object-cover"
                           />
-                          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center">
+                          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
                             <Button
                               type="button"
                               variant="destructive"
@@ -370,7 +411,7 @@ export default function NewProjectPage() {
                             </Button>
                           </div>
                           {index === mainImageIndex && (
-                            <div className="absolute top-2 left-2 bg-primary text-white px-2 py-1 rounded text-xs">
+                            <div className="absolute top-2 left-2 bg-primary text-primary-foreground px-2 py-1 rounded text-xs font-medium">
                               Main
                             </div>
                           )}
@@ -390,6 +431,12 @@ export default function NewProjectPage() {
                       </div>
                     ))}
                   </div>
+                )}
+
+                {errors.images && (
+                  <p className="text-sm text-red-500">
+                    {errors.images.message}
+                  </p>
                 )}
               </CardContent>
             </Card>
