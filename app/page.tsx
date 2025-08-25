@@ -6,6 +6,7 @@ import TestimonialsPreview from "@/components/home/TestimonialsPreview";
 import CallToAction from "@/components/home/CallToAction";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import ClientsSectionHome from "@/components/clients/page";
 
 export default function HomePage() {
   return (
@@ -17,6 +18,7 @@ export default function HomePage() {
       <ServicesOverview />
       <TestimonialsPreview />
       <CallToAction />
+      <ClientsSectionHome />
       <Footer />
     </>
   );
