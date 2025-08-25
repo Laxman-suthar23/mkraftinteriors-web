@@ -38,7 +38,7 @@ const clients = [
   },
   {
     name: "Sherwood Suits Service Apartment",
-    logo: "/images/clients/Sherwood Suits Service Apartment.png",
+    logo: "/images/clients/sherwood suites service apartments.jpg",
   },
   {
     name: "Sri Balaji Construction",
