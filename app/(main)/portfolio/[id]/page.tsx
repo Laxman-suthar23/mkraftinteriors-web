@@ -66,11 +66,14 @@ export default function ProjectPage({ params }: ProjectPageProps) {
           <div className="container py-16">
             <div className="animate-pulse">
               <div className="h-8 bg-muted rounded w-64 mb-8" />
-              <div className="h-96 bg-muted rounded mb-8" />
-              <div className="space-y-4">
-                <div className="h-4 bg-muted rounded w-full" />
-                <div className="h-4 bg-muted rounded w-3/4" />
-                <div className="h-4 bg-muted rounded w-1/2" />
+              <div className="grid lg:grid-cols-2 gap-12 mb-16">
+                <div className="aspect-square bg-muted rounded" />
+                <div className="space-y-4">
+                  <div className="h-8 bg-muted rounded w-3/4" />
+                  <div className="h-4 bg-muted rounded w-full" />
+                  <div className="h-4 bg-muted rounded w-3/4" />
+                  <div className="h-4 bg-muted rounded w-1/2" />
+                </div>
               </div>
             </div>
           </div>
@@ -119,126 +122,116 @@ export default function ProjectPage({ params }: ProjectPageProps) {
           </div>
         </section>
 
-        {/* Hero Image */}
+        {/* Main Content: Image and Project Details */}
         <section className="mb-16">
           <div className="container">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              className="relative h-[80vh] rounded-lg overflow-hidden cursor-pointer"
-              onClick={() => openLightbox(0)}
-            >
-              <Image
-                src={project.mainImage}
-                alt={project.title}
-                fill
-                className="object-cover"
-                priority
-              />
-              <div className="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors" />
-              <div className="absolute bottom-6 left-6 text-white">
-                <h1 className="heading-2 mb-2">{project.title}</h1>
-                <p className="text-lg opacity-90">{project.location}</p>
-              </div>
-            </motion.div>
-          </div>
-        </section>
+            <div className="grid lg:grid-cols-2 gap-12">
+              {/* Main Image - Square */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                className="relative aspect-square rounded-lg overflow-hidden cursor-pointer group"
+                onClick={() => openLightbox(0)}
+              >
+                <Image
+                  src={project.mainImage}
+                  alt={project.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  priority
+                />
+                <div className="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors" />
+              </motion.div>
 
-        {/* Project Details */}
-        <section className="mb-16">
-          <div className="container">
-            <div className="grid lg:grid-cols-3 gap-12">
-              {/* Main Content */}
-              <div className="lg:col-span-2">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                >
-                  <h2 className="heading-3 mb-6">Project Overview</h2>
-                  <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+              {/* Project Description and Details */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="flex flex-col justify-center space-y-8"
+              >
+                {/* Project Title and Location */}
+                <div>
+                  <h1 className="heading-2 mb-3">{project.title}</h1>
+                  <p className="text-lg text-muted-foreground mb-6">{project.location}</p>
+                </div>
+
+                {/* Project Overview */}
+                <div>
+                  <h2 className="heading-3 mb-4">Project Overview</h2>
+                  <p className="text-muted-foreground leading-relaxed mb-6">
                     {project.description}
                   </p>
-
+                  
                   {project.fullDescription && (
-                    <div className="prose prose-lg max-w-none">
-                      <p className="leading-relaxed">
-                        {project.fullDescription}
-                      </p>
-                    </div>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {project.fullDescription}
+                    </p>
                   )}
-                </motion.div>
-              </div>
+                </div>
 
-              {/* Project Info Sidebar */}
-              <div className="lg:col-span-1">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                >
-                  <Card>
-                    <CardContent className="p-6">
-                      <h3 className="font-semibold text-lg mb-6">
-                        Project Details
-                      </h3>
-                      <div className="space-y-4">
-                        <div className="flex items-center space-x-3">
-                          <Calendar className="h-5 w-5 text-muted-foreground" />
-                          <div>
-                            <div className="font-medium">Completed</div>
-                            <div className="text-sm text-muted-foreground">
-                              {formatDate(project.date)}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center space-x-3">
-                          <MapPin className="h-5 w-5 text-muted-foreground" />
-                          <div>
-                            <div className="font-medium">Location</div>
-                            <div className="text-sm text-muted-foreground">
-                              {project.location}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center space-x-3">
-                          <User className="h-5 w-5 text-muted-foreground" />
-                          <div>
-                            <div className="font-medium">Client</div>
-                            <div className="text-sm text-muted-foreground">
-                              {project.client}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center space-x-3">
-                          <ExternalLink className="h-5 w-5 text-muted-foreground" />
-                          <div>
-                            <div className="font-medium">Type</div>
-                            <div className="text-sm text-muted-foreground">
-                              {project.type}
-                            </div>
+                {/* Project Info Card */}
+                <Card>
+                  <CardContent className="p-6">
+                    <h3 className="font-semibold text-lg mb-4">
+                      Project Details
+                    </h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="flex items-center space-x-3">
+                        <Calendar className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-sm">Completed</div>
+                          <div className="text-xs text-muted-foreground">
+                            {formatDate(project.date)}
                           </div>
                         </div>
                       </div>
 
-                      <div className="mt-8 pt-6 border-t">
-                        <Link href="/contact">
-                          <Button className="w-full">Start Your Project</Button>
-                        </Link>
+                      <div className="flex items-center space-x-3">
+                        <MapPin className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-sm">Location</div>
+                          <div className="text-xs text-muted-foreground">
+                            {project.location}
+                          </div>
+                        </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              </div>
+
+                      <div className="flex items-center space-x-3">
+                        <User className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-sm">Client</div>
+                          <div className="text-xs text-muted-foreground">
+                            {project.client}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-3">
+                        <ExternalLink className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-sm">Type</div>
+                          <div className="text-xs text-muted-foreground">
+                            {project.type}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 pt-4 border-t">
+                      <Link href="/contact">
+                        <Button className="w-full">Start Your Project</Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Image Gallery */}
+        {/* Image Gallery - Below both sections */}
         {project.images.length > 1 && (
           <section className="mb-16">
             <div className="container">
@@ -248,10 +241,13 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
                 <h2 className="heading-3 mb-8">Project Gallery</h2>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {project.images.map((image, index) => (
-                    <div
+                    <motion.div
                       key={index}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
                       className="relative aspect-square rounded-lg overflow-hidden cursor-pointer group"
                       onClick={() => openLightbox(index)}
                     >
@@ -262,7 +258,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                       <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </motion.div>

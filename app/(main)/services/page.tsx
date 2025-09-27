@@ -1,84 +1,70 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Home, Building2, Palette, Layout, ShoppingBag, Wrench, CheckCircle, ArrowRight, Clock } from 'lucide-react';
+import { Award, Users, Clock, Heart, Target, Lightbulb, CheckCircle, Wrench, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import Image from 'next/image';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import CallToAction from '@/components/home/CallToAction';
 
-const Services = () => {
-  const services = [
+const About = () => {
+  const stats = [
+    { icon: Award, number: '150+', label: 'Projects Built' },
+    { icon: Users, number: '500+', label: 'Happy Clients' },
+    { icon: Clock, number: '10+', label: 'Years Crafting' },
+    { icon: Wrench, number: '25+', label: 'Awards Won' },
+  ];
+
+  const values = [
     {
-      icon: Home,
-      title: 'Residential Design',
-      description: 'Complete home transformations from concept to completion. We create living spaces that reflect your personality and enhance your daily life.',
-      features: ['Living Room Design', 'Bedroom Makeovers', 'Kitchen Renovations', 'Bathroom Remodeling', 'Home Office Setup', 'Outdoor Spaces'],
-      popular: false
+      icon: Heart,
+      title: 'Passionate Craftsmanship',
+      description: 'We pour our expertise into every project, building spaces that truly reflect quality workmanship and attention to detail.',
     },
     {
-      icon: Building2,
-      title: 'Commercial Design',
-      description: 'Professional spaces that inspire productivity and leave lasting impressions on clients and employees.',
-      features: ['Office Design', 'Retail Spaces', 'Restaurant Interiors', 'Hotel Design', 'Co-working Spaces', 'Reception Areas'],
-      popular: false
+      icon: Target,
+      title: 'Goal-Oriented Building',
+      description: 'Focused on delivering construction results that exceed expectations and transform your space through skilled craftsmanship.',
     },
     {
-      icon: Layout,
-      title: 'Space Planning',
-      description: 'Optimize your space with strategic planning that maximizes functionality while maintaining aesthetic appeal.',
-      features: ['Layout Optimization', 'Traffic Flow Analysis', 'Storage Solutions', 'Multi-purpose Areas', '3D Visualization', 'Feng Shui Principles'],
-      popular: false
+      icon: Lightbulb,
+      title: 'Creative Construction Solutions',
+      description: 'Innovative approaches to interior construction challenges, using traditional techniques with modern materials.',
     },
     {
-      icon: Palette,
-      title: 'Color Consultation',
-      description: 'Expert color schemes that create the perfect mood and atmosphere for every room in your space.',
-      features: ['Color Psychology', 'Paint Selection', 'Accent Colors', 'Seasonal Updates', 'Lighting Coordination', 'Material Matching'],
-      popular: false
+      icon: CheckCircle,
+      title: 'Quality Construction Assured',
+      description: 'Meticulous attention to construction details ensures every built element meets our exceptionally high standards.',
     },
-    {
-      icon: ShoppingBag,
-      title: 'Furniture & Decor',
-      description: 'Curated selection of furniture and accessories that perfectly complement your design vision.',
-      features: ['Custom Furniture', 'Art Curation', 'Lighting Design', 'Textile Selection', 'Accessory Styling', 'Window Treatments'],
-      popular: false
-    },
-    {
-      icon: Wrench,
-      title: 'Project Management',
-      description: 'End-to-end project coordination ensuring your design comes to life on time and within budget.',
-      features: ['Timeline Management', 'Contractor Coordination', 'Quality Control', 'Budget Oversight', 'Progress Reporting', 'Final Installation'],
-      popular: false
-    }
   ];
 
   const process = [
     {
       step: '01',
-      title: 'Initial Consultation',
-      description: 'We meet to discuss your vision, needs, and budget. This consultation helps us understand your style preferences and project requirements.',
-      duration: '1-2 hours'
+      title: 'Site Assessment',
+      description: 'We assess your space, discuss construction requirements, and understand your functional needs for the building project.',
+      duration: '1-2 days'
     },
     {
       step: '02',
-      title: 'Design Development',
-      description: 'Our team creates detailed design concepts, mood boards, and 3D visualizations to bring your vision to life.',
+      title: 'Construction Planning',
+      description: 'Our team creates detailed construction plans, structural drawings, and material specifications for the build.',
       duration: '1-2 weeks'
     },
     {
       step: '03',
-      title: 'Material Selection',
-      description: 'We help you choose the perfect materials, finishes, furniture, and accessories that align with your design and budget.',
-      duration: '1 week'
+      title: 'Material Procurement',
+      description: 'We source quality construction materials, coordinate deliveries, and prepare the site for building work.',
+      duration: '2-4 weeks'
     },
     {
       step: '04',
-      title: 'Implementation',
-      description: 'We coordinate with contractors and suppliers to execute the design, managing every detail from start to finish.',
-      duration: '4-8 weeks'
-    }
+      title: 'Construction & Build',
+      description: 'Our skilled craftsmen execute the construction work, building every element with precision and quality control.',
+      duration: '1-2 weeks'
+    },
   ];
 
   // Enhanced animation variants
@@ -87,7 +73,7 @@ const Services = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.15,
         delayChildren: 0.2
       }
     }
@@ -106,147 +92,152 @@ const Services = () => {
     }
   };
 
-  const heroVariants = {
-    hidden: { opacity: 0, y: 50 },
+  const statVariants = {
+    hidden: { scale: 0, opacity: 0 },
     visible: {
+      scale: 1,
       opacity: 1,
-      y: 0,
       transition: {
-        duration: 1,
-        ease: "easeOut"
+        type: "spring",
+        stiffness: 200,
+        damping: 15
       }
     }
   };
 
   return (
     <>
-    <Header/>    
+    <Header/>
     <div className="min-h-screen pt-16">
       {/* Hero Section */}
-      <section className="py-20" style={{ background: 'var(--gradient-hero)' }}>
+      <section className="py-20" style={{ background: 'var(--gradient-subtle)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
-            variants={heroVariants}
-            initial="hidden"
-            animate="visible"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
             className="text-center space-y-8"
           >
             <motion.h1 
-              className="text-5xl md:text-6xl font-bold text-white"
+              className="text-5xl md:text-6xl font-bold text-foreground"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              Our <span className="text-gradient">Services</span>
+              About <span className="text-gradient">Mkraft Interiors</span>
             </motion.h1>
             <motion.p 
-              className="text-xl text-white max-w-4xl mx-auto leading-relaxed"
+              className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              From complete home makeovers to commercial space design, we offer comprehensive interior design services 
-              tailored to transform your space into something extraordinary.
+              We are skilled interior crafters dedicated to building spaces that inspire, function perfectly, and reflect quality workmanship. 
+              With over a decade of construction experience, we transform ordinary spaces into extraordinary built environments.
             </motion.p>
           </motion.div>
         </div>
       </section>
 
-      {/* Services Grid */}
+      {/* Our Story */}
       <section className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              What We <span className="text-gradient">Offer</span>
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Choose from our range of specialized services, each designed to address specific aspects 
-              of interior design and space transformation.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {services.map((service, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                whileHover={{ 
-                  y: -10, 
-                  transition: { duration: 0.3 } 
-                }}
-                className={`relative bg-card rounded-2xl p-8 shadow-card hover-lift group border-2 transition-all duration-300 ${
-                  service.popular ? 'border-accent shadow-elegant' : 'border-transparent hover:border-accent/20'
-                }`}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="space-y-8"
+            >
+              <motion.h2 
+                className="text-4xl md:text-5xl font-bold text-foreground"
+                whileInView={{ scale: [0.9, 1] }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
               >
-                {service.popular && (
-                  <motion.div 
-                    className="absolute -top-4 left-1/2 transform -translate-x-1/2"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: index * 0.1 + 0.5 }}
+                Our <span className="text-gradient">Craft</span>
+              </motion.h2>
+              
+              <div className="space-y-6 text-muted-foreground leading-relaxed">
+                {[
+                  "Mkraft Interiors was founded in 2014 with a simple belief: every space has the potential to be expertly crafted. What started as a small construction workshop has grown into a full-service interior building firm, but our core philosophy of quality craftsmanship remains unchanged.",
+                  "We believe that great construction is not just about following blueprints or using standard materials. It's about understanding how you live and work, then building spaces that enhance every moment of your daily life through skilled craftsmanship.",
+                  "Our team of talented craftsmen brings together diverse backgrounds in construction, carpentry, and interior building, allowing us to approach each project with traditional techniques and innovative construction solutions."
+                ].map((text, index) => (
+                  <motion.p
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
                   >
-                  </motion.div>
-                )}
+                    {text}
+                  </motion.p>
+                ))}
+              </div>
 
-                <div className="mb-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <Link href="/portfolio">
+                  <Button className="btn-primary group">
+                    View Our Built Work
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="grid grid-cols-2 gap-6"
+            >
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={index}
+                  variants={statVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ 
+                    y: -5,
+                    transition: { duration: 0.3 }
+                  }}
+                  className="bg-card rounded-2xl p-6 md:p-8 text-center shadow-card hover-lift group"
+                >
                   <motion.div 
-                    className="w-16 h-16 bg-accent/20 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-accent/30 transition-colors duration-300"
+                    className="w-16 h-16 bg-accent/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/30 transition-colors duration-300"
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.6 }}
                   >
-                    <service.icon className="h-8 w-8 text-accent" />
+                    <stat.icon className="h-8 w-8 text-accent" />
                   </motion.div>
-                  <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-accent transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed mb-4">
-                    {service.description}
-                  </p>
-                </div>
-
-                <div className="space-y-3 mb-8">
-                  {service.features.map((feature, featureIndex) => (
-                    <motion.div 
-                      key={featureIndex} 
-                      className="flex items-center"
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: featureIndex * 0.05 }}
-                      viewport={{ once: true }}
-                    >
-                      <CheckCircle className="h-4 w-4 text-accent mr-3 flex-shrink-0" />
-                      <span className="text-sm text-muted-foreground">{feature}</span>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <Button className={`w-full group/btn transition-all duration-300 ${
-                    service.popular ? 'btn-accent' : 'btn-primary'
-                  }`}>
-                    Get Started
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                  </Button>
+                  <motion.div 
+                    className="text-3xl font-bold text-foreground mb-2"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ delay: index * 0.1 + 0.2 }}
+                    viewport={{ once: true }}
+                  >
+                    {stat.number}
+                  </motion.div>
+                  <div className="text-sm text-muted-foreground font-medium">{stat.label}</div>
                 </motion.div>
-              </motion.div>
-            ))}
-          </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Process Section */}
+      {/* Our Values */}
       <section className="py-20" style={{ background: 'var(--gradient-subtle)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -257,11 +248,65 @@ const Services = () => {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Our <span className="text-gradient">Process</span>
+              Our <span className="text-gradient">Values</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              We follow a proven process that ensures your project runs smoothly from concept to completion, 
-              keeping you informed and involved every step of the way.
+              These core principles guide everything we build, ensuring that every construction project we undertake 
+              reflects our commitment to excellence and client satisfaction.
+            </p>
+          </motion.div>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          >
+            {values.map((value, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                whileHover={{ 
+                  y: -10,
+                  scale: 1.02,
+                  transition: { duration: 0.3 }
+                }}
+                className="bg-card rounded-2xl p-8 shadow-card hover-lift group"
+              >
+                <motion.div 
+                  className="w-16 h-16 bg-accent/20 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-accent/30 transition-colors duration-300"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <value.icon className="h-8 w-8 text-accent" />
+                </motion.div>
+                <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-accent transition-colors">
+                  {value.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">{value.description}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Process */}
+      <section className="py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+              Our Construction <span className="text-gradient">Process</span>
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              We follow a proven construction methodology that ensures your building project runs smoothly from planning to completion, 
+              keeping you informed and involved throughout the entire construction process.
             </p>
           </motion.div>
 
@@ -277,32 +322,78 @@ const Services = () => {
                 key={index}
                 variants={itemVariants}
                 whileHover={{ y: -5, scale: 1.02 }}
-                className="bg-card rounded-2xl p-6 shadow-card text-center hover-lift group"
+                className="text-center group"
               >
                 <motion.div 
-                  className="w-16 h-16 bg-accent text-accent-foreground rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-6 group-hover:shadow-elegant transition-all duration-300"
-                  whileHover={{ scale: 1.1 }}
+                  className="w-16 h-16 bg-accent text-accent-foreground rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-6 shadow-card group-hover:shadow-elegant transition-all duration-300"
+                  whileHover={{ scale: 1.15 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
                   {phase.step}
                 </motion.div>
-                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-accent transition-colors">
+                <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-accent transition-colors">
                   {phase.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  {phase.description}
-                </p>
-                <div className="flex items-center justify-center text-sm text-accent font-medium">
-                  <Clock className="h-4 w-4 mr-2" />
-                  {phase.duration}
-                </div>
+                <p className="text-muted-foreground leading-relaxed mb-3">{phase.description}</p>
+                <div className="text-sm text-accent font-medium">{phase.duration}</div>
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Team Highlight */}
+      <section className="py-20" style={{ background: 'var(--gradient-subtle)' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+              <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-elegant">
+                <Image
+                  src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=500&fit=crop"
+                  alt="Mkraft Interiors Craftsmen Team"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-accent/20 to-transparent" />
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="space-y-6"
+            >
+              <h2 className="text-4xl font-bold text-foreground">
+                Meet Our <span className="text-gradient">Expert Craftsmen</span>
+              </h2>
+              <p className="text-muted-foreground leading-relaxed">
+                Our diverse team of craftsmen, carpenters, and construction specialists work collaboratively 
+                to ensure every detail of your building project is executed flawlessly. With combined decades 
+                of construction experience, we bring traditional craftsmanship, technical expertise, and passion to every build.
+              </p>
+              <div className="bg-card rounded-2xl p-6 shadow-card">
+                <blockquote className="text-lg italic text-muted-foreground leading-relaxed">
+                  "Craftsmanship is not just what it looks like and feels like. Craftsmanship is how it's built. 
+                  We create spaces that work beautifully for your life through quality construction."
+                </blockquote>
+                <footer className="mt-4">
+                  <cite className="text-accent font-semibold">— Mkraft Interiors Craftsmen Team</cite>
+                </footer>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
       <CallToAction />
     </div>
     <Footer/>
@@ -310,4 +401,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default About;

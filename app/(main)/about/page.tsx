@@ -45,25 +45,21 @@ const About = () => {
       step: '01',
       title: 'Discovery',
       description: 'We start by understanding your vision, lifestyle, and goals for the space.',
-      duration: '1-2 days'
     },
     {
       step: '02',
       title: 'Design',
       description: 'Our team creates detailed designs and 3D visualizations of your future space.',
-      duration: '1-2 weeks'
     },
     {
       step: '03',
       title: 'Development',
       description: 'We coordinate with contractors and suppliers to bring the design to life.',
-      duration: '2-4 weeks'
     },
     {
       step: '04',
       title: 'Delivery',
       description: 'Final installation and styling to ensure every detail is perfect.',
-      duration: '1-2 weeks'
     },
   ];
 
@@ -335,7 +331,6 @@ const About = () => {
                   {phase.title}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed mb-3">{phase.description}</p>
-                <div className="text-sm text-accent font-medium">{phase.duration}</div>
               </motion.div>
             ))}
           </motion.div>

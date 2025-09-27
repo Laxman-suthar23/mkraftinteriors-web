@@ -58,7 +58,7 @@ export default function AdminSidebar() {
           {/* Logo */}
           <div className="flex items-center justify-center h-16 border-b">
             <Link href="/admin/dashboard" className="flex items-center space-x-2">
-              <div className="text-xl font-serif font-bold text-primary-foreground">
+              <div className="text-xl font-serif font-bold text-primary">
                 Mkraft
               </div>
               <div className="text-xl font-serif font-light">Interiors Admin</div>
@@ -98,7 +98,7 @@ export default function AdminSidebar() {
           {/* Footer */}
           <div className="border-t p-4">
             <div className="text-xs text-muted-foreground text-center">
-              Karni Interiors Admin
+              Mkraft Interiors Admin
             </div>
           </div>
         </div>
