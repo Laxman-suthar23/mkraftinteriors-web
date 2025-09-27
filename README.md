@@ -74,7 +74,7 @@ Visit [http://localhost:3000](http://localhost:3000) to see the application.
 ## Admin Panel
 
 Access the admin panel at `/admin` with these default credentials:
-- **Email**: admin@karniinteriors.com
+- **Email**: admin@Mkraftinteriors.com
 - **Password**: admin123
 
 ## Scripts
@@ -90,7 +90,7 @@ Access the admin panel at `/admin` with these default credentials:
 
 ## Project Structure
 
-karni-interiors/
+Mkraft-interiors/
 ├── app/ # Next.js 14 app directory
 ├── components/ # React components
 ├── lib/ # Utilities and configurations

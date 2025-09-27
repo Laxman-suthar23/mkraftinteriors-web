@@ -58,8 +58,8 @@ export default function AdminSidebar() {
           {/* Logo */}
           <div className="flex items-center justify-center h-16 border-b">
             <Link href="/admin/dashboard" className="flex items-center space-x-2">
-              <div className="text-xl font-serif font-bold text-red-500">
-                Karni
+              <div className="text-xl font-serif font-bold text-primary-foreground">
+                Mkraft
               </div>
               <div className="text-xl font-serif font-light">Interiors Admin</div>
             </Link>

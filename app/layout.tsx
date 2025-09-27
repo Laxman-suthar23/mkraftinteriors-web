@@ -4,7 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import AuthProvider from "@/components/auth/AuthProvider";
 import { Toaster } from "@/components/ui/toaster";
-
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -17,45 +16,49 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "Karni Interiors - Designing Spaces, Creating Stories",
-    template: "%s | Karni Interiors",
+    default: "Mkraft Interiors - Crafting Spaces, Building Dreams",
+    template: "%s | Mkraft Interiors",
   },
   description:
-    "Premium interior crafting services, turning designs into beautiful, functional spaces that reflect your lifestyle and personality. Transform your space with Karni Interiors.",
+    "Premium interior crafting services transforming blueprints into reality. Expert craftsmen delivering beautiful, functional spaces through precision construction and custom millwork.",
   keywords: [
+    "Interior Crafting",
     "Residential Construction",
-    "Commercial Fit-Outs",
-    "Custom Finishing",
-    "Structural & Space Execution",
-    "Electrical & Lighting Installation",
-    "Turnkey Project Delivery",
+    "Commercial Build-outs", 
+    "Custom Millwork",
+    "Space Planning & Construction",
+    "Furniture Installation",
+    "Project Execution",
+    "Turnkey Interior Solutions",
+    "Interior Contractors",
+    "Custom Interiors",
   ],
-  authors: [{ name: "Karni Interiors" }],
-  creator: "Karni Interiors",
-  metadataBase: new URL("https://karniinteriors.com"),
+  authors: [{ name: "Mkraft Interiors" }],
+  creator: "Mkraft Interiors",
+  metadataBase: new URL("https://mkraftinterio.com"),
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://karniinteriors.com",
-    siteName: "Karni Interiors",
-    title: "Karni Interiors - Designing Spaces, Creating Stories",
+    url: "https://mkraftinterio.com",
+    siteName: "Mkraft Interiors",
+    title: "Mkraft Interiors - Crafting Spaces, Building Dreams",
     description:
-      "Premium interior design services creating beautiful, functional spaces that reflect your unique lifestyle and personality.",
+      "Expert interior crafting services bringing designs to life. From concept to completion, we build beautiful, functional spaces with precision craftsmanship.",
     images: [
       {
-        url: "public/favicon.ico",
+        url: "/images/og-mkraft-interiors.jpg",
         width: 1200,
         height: 630,
-        alt: "Karni Interiors - Premium Interior Crafting",
+        alt: "Mkraft Interiors - Premium Interior Crafting & Construction",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Karni Interiors – Crafting Spaces, Shaping Stories",
+    title: "Mkraft Interiors - Crafting Spaces, Building Dreams",
     description:
-      "Premium interior crafting services, bringing designs to life with beautiful, functional spaces.",
-    images: ["/images/og-image.jpg"],
+      "Expert interior crafting services. We don't just design - we build, construct, and craft your vision into reality.",
+    images: ["/images/twitter-mkraft-interiors.jpg"],
   },
   robots: {
     index: true,
@@ -69,7 +72,6 @@ export const metadata: Metadata = {
     },
   },
 };
-
 export default function RootLayout({
   children,
 }: {

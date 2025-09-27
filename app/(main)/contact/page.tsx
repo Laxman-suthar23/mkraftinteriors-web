@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Link from 'next/link';
+import ContactForm from '@/components/contact/ContactForm';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -54,22 +55,22 @@ const Contact = () => {
   const contactInfo = [
     {
       icon: MapPin,
-      title: 'Visit Our Studio',
-      details: ['Pimpri, Maharashtra', 'India - 411018'],
+      title: 'Visit Our Office',
+      details: ['Pune, Maharashtra', 'India - 411018'],
       action: 'Get Directions',
       link: 'https://maps.google.com/?q=Pimpri,Maharashtra,India',
     },
     {
       icon: Phone,
       title: 'Call Us',
-      details: ['+91 98451 02493', '+91 90876 54321'],
+      details: ['+91 98451 02493'],
       action: 'Call Now',
       link: 'tel:+919845102493',
     },
     {
       icon: Mail,
       title: 'Email Us',
-      details: ['hello@mkraftinteriors.com', 'projects@mkraftinteriors.com'],
+      details: ['hello@mkraftinteriors.com','  '],
       action: 'Send Email',
       link: 'mailto:hello@mkraftinteriors.com',
     },
@@ -78,7 +79,7 @@ const Contact = () => {
       title: 'Business Hours',
       details: ['Mon - Fri: 9:00 AM - 6:00 PM', 'Sat: 10:00 AM - 4:00 PM', 'Sun: By Appointment'],
       action: 'Schedule Call',
-      link: '/contact',
+      link: 'tel:+919845102493',
     },
   ];
 
@@ -104,10 +105,10 @@ const Contact = () => {
               transition={{ duration: 0.8 }}
               className="text-center space-y-8"
             >
-              <h1 className="text-5xl md:text-6xl font-bold text-primary-foreground">
+              <h1 className="text-5xl md:text-6xl font-bold text-white">
                 Get In <span className="text-gradient">Touch</span>
               </h1>
-              <p className="text-xl text-primary-foreground/90 max-w-4xl mx-auto leading-relaxed">
+              <p className="text-xl text-white max-w-4xl mx-auto leading-relaxed">
                 Ready to transform your space? We'd love to hear about your project and discuss how 
                 we can craft your vision into reality. Contact us today for a free consultation.
               </p>
@@ -195,112 +196,7 @@ const Contact = () => {
                 viewport={{ once: true }}
               >
                 <Card className="shadow-elegant bg-card">
-                  <CardContent className="p-8">
-                    <h2 className="text-3xl font-bold text-foreground mb-6">Send Us a Message</h2>
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                            Full Name *
-                          </label>
-                          <Input
-                            id="name"
-                            name="name"
-                            type="text"
-                            required
-                            value={formData.name}
-                            onChange={handleInputChange}
-                            placeholder="Your Name"
-                            className="w-full"
-                          />
-                        </div>
-                        <div>
-                          <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                            Email Address *
-                          </label>
-                          <Input
-                            id="email"
-                            name="email"
-                            type="email"
-                            required
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            placeholder="your@email.com"
-                            className="w-full"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
-                            Phone Number
-                          </label>
-                          <Input
-                            id="phone"
-                            name="phone"
-                            type="tel"
-                            value={formData.phone}
-                            onChange={handleInputChange}
-                            placeholder="+91 98765 43210"
-                            className="w-full"
-                          />
-                        </div>
-                        <div>
-                          <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">
-                            Service Interest
-                          </label>
-                          <select
-                            id="subject"
-                            name="subject"
-                            value={formData.subject}
-                            onChange={(e) => setFormData(prev => ({ ...prev, subject: e.target.value }))}
-                            className="w-full p-3 border border-input rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-accent"
-                          >
-                            <option value="">Select a service</option>
-                            {services.map((service) => (
-                              <option key={service} value={service}>
-                                {service}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-
-                      <div>
-                        <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                          Project Details *
-                        </label>
-                        <Textarea
-                          id="message"
-                          name="message"
-                          required
-                          value={formData.message}
-                          onChange={handleInputChange}
-                          placeholder="Tell us about your project, space requirements, timeline, and any specific crafting needs..."
-                          rows={6}
-                          className="w-full resize-none"
-                        />
-                      </div>
-
-                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                        <Button
-                          type="submit"
-                          disabled={isSubmitting}
-                          className="w-full btn-accent group"
-                        >
-                          {isSubmitting ? (
-                            'Sending...'
-                          ) : (
-                            <>
-                              Send Message
-                              <Send className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                            </>
-                          )}
-                        </Button>
-                      </motion.div>
-                    </form>
-                  </CardContent>
+                  <ContactForm/>
                 </Card>
               </motion.div>
 
@@ -403,16 +299,11 @@ const Contact = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button size="lg" className="btn-accent">
-                    Schedule Free Consultation
-                  </Button>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Link href="/portfolio">
                     <Button 
                       variant="outline" 
                       size="lg" 
-                      className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary transition-all duration-300"
+                      className="border-primary-foreground border-2 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
                     >
                       View Our Work
                     </Button>

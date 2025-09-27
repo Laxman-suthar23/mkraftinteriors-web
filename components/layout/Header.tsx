@@ -56,13 +56,14 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 lg:h-18">
           {/* Enhanced Logo */}
           <Link href="/" className="flex items-center space-x-3">
-            <div className="w-10 pl-1 h-10 flex items-center justify-center">
+            <div className="w-10 pt-1 h-10 flex items-center justify-center">
               <Image
-                src="/images/about/logo.jpg"
+                src="/images/about/Mkraft-logo.svg" // SVG format
                 alt="Mkraft Interiors Logo"
-                width={30}
-                height={30}
-                className="rounded-lg object-contain shadow-card hover-glow transition-all duration-300"
+                width={32}
+                height={32}
+                className="rounded-lg shadow-card hover-glow transition-all duration-300"
+                priority={true}
               />
             </div>
 

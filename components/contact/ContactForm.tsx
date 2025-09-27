@@ -62,9 +62,9 @@ export default function ContactForm() {
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+      <>
       <CardHeader>
-        <CardTitle className="text-2xl text-center">Get In Touch</CardTitle>
+        <CardTitle className="text-2xl text-center">Send us a message</CardTitle>
         <p className="text-muted-foreground text-center">
           Ready to transform your space? Let's discuss your project.
         </p>
@@ -91,11 +91,11 @@ export default function ContactForm() {
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="name">Name *</Label>
+              <Label htmlFor="name"> Name *</Label>
               <Input
                 id="name"
                 {...register("name")}
-                placeholder="Your full name"
+                placeholder="Your Name"
                 disabled={isSubmitting}
               />
               {errors.name && (
@@ -104,12 +104,12 @@ export default function ContactForm() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email *</Label>
+              <Label htmlFor="email"> Email *</Label>
               <Input
                 id="email"
                 type="email"
                 {...register("email")}
-                placeholder="your.email@example.com"
+                placeholder="your@email.com"
                 disabled={isSubmitting}
               />
               {errors.email && (
@@ -125,7 +125,7 @@ export default function ContactForm() {
                 id="phone"
                 type="tel"
                 {...register("phone")}
-                placeholder="+91 9876543210"
+                placeholder="+91 98765 43210"
                 disabled={isSubmitting}
               />
             </div>
@@ -154,12 +154,12 @@ export default function ContactForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="message">Message *</Label>
+            <Label htmlFor="message">Project Details *</Label>
             <Textarea
               id="message"
               {...register("message")}
               rows={6}
-              placeholder="Tell us about your project, timeline, budget, and any specific requirements..."
+              placeholder="Tell us about your project, space, timeline, and any specific requirements..."
               disabled={isSubmitting}
             />
             {errors.message && (
@@ -175,12 +175,9 @@ export default function ContactForm() {
           >
             {isSubmitting ? "Sending..." : "Send Message"}
           </Button>
-
-          <p className="text-xs text-muted-foreground text-center">
-            By submitting this form, you agree to our privacy policy and terms of service.
-          </p>
         </form>
       </CardContent>
-    </Card>
+    
+    </>
   );
 }

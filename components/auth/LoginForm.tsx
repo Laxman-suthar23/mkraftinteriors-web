@@ -56,7 +56,7 @@ export default function LoginForm() {
         <CardHeader className="bg-white rounded-t-lg text-center py-6">
           <CardTitle className="text-3xl text-black font-semibold">Admin Login</CardTitle>
           <p className="mt-1 text-sm text-gray-500">
-            Sign in to manage Karni Interiors
+            Sign in to manage Mkraft Interiors
           </p>
         </CardHeader>
 
