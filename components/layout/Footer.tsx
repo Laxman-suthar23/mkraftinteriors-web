@@ -1,14 +1,17 @@
-import Link from "next/link";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Instagram,
-  Facebook,
-  Linkedin,
-} from "lucide-react";
+"use client";
 
-export default function Footer() {
+import Link from 'next/link';
+import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, ExternalLink } from 'lucide-react';
+
+const Footer = () => {
+  const handlePhoneCall = () => {
+    window.open('tel:+1234567890', '_self');
+  };
+
+  const handleEmailClick = () => {
+    window.open('mailto:hello@mkraftinteriors.com', '_blank');
+  };
+
   return (
     <footer className="bg-muted/50 border-t">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -16,34 +19,42 @@ export default function Footer() {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="text-2xl font-serif font-bold text-red-500">
-                Karni
+              <div className="text-2xl font-serif font-bold text-primary">
+                Mkraft
               </div>
               <div className="text-2xl font-serif font-light text-foreground">
                 Interiors
               </div>
             </div>
             <p className="text-muted-foreground text-sm">
-              Building spaces, creating stories. Transform your environment with
-              our expert interior craftsmanship and execution services.
+              Creating beautiful, functional spaces that reflect your unique style and personality. 
+              Transform your home with our expert interior services.
             </p>
             <div className="flex space-x-4">
               <a
-                href="https://instagram.com/karniinteriors"
+                href="https://instagram.com/mkraftinteriors"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
                 <Instagram className="h-5 w-5" />
               </a>
               <a
-                href="https://facebook.com/karniinteriors"
+                href="https://facebook.com/mkraftinteriors"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
                 <Facebook className="h-5 w-5" />
               </a>
               <a
-                href="https://linkedin.com/company/karniinteriors"
+                href="https://twitter.com/mkraftinteriors"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
-              ></a>
+              >
+                <Twitter className="h-5 w-5" />
+              </a>
             </div>
           </div>
 
@@ -52,11 +63,12 @@ export default function Footer() {
             <h3 className="font-semibold text-foreground mb-4">Quick Links</h3>
             <div className="space-y-2">
               {[
+                { name: "Home", href: "/" },
                 { name: "About Us", href: "/about" },
+                { name: "Services", href: "/services" },
                 { name: "Portfolio", href: "/portfolio" },
                 { name: "Gallery", href: "/gallery" },
                 { name: "Reviews", href: "/reviews" },
-                { name: "Our Clients", href: "/clients" },
                 { name: "Contact", href: "/contact" },
               ].map((link) => (
                 <Link
@@ -75,12 +87,12 @@ export default function Footer() {
             <h3 className="font-semibold text-foreground mb-4">Services</h3>
             <div className="space-y-2">
               {[
-                "Residential Construction",
-                "Commercial Fit-Outs",
-                "Custom Finishing",
-                "Structural & Space Execution",
-                "Electrical & Lighting Installation",
-                "Turnkey Project Delivery",
+                "Residential Design",
+                "Commercial Design", 
+                "Space Planning",
+                "Color Consultation",
+                "Furniture Selection",
+                "Project Management",
               ].map((service) => (
                 <div key={service} className="text-muted-foreground text-sm">
                   {service}
@@ -96,23 +108,34 @@ export default function Footer() {
               <div className="flex items-start space-x-3">
                 <MapPin className="h-4 w-4 text-muted-foreground mt-1 flex-shrink-0" />
                 <div className="text-muted-foreground text-sm">
-                  #19 Karni Interiors, 2nd main Road, Beside Canara Bank, DLF
-                  New Town, Akshaya Nagar.
+                  123 Design Street,
                   <br />
-                  Bangalore, Karnataka, -560068
+                  Creative District,
+                  <br />
+                  City, State 12345
                 </div>
               </div>
-              <div className="flex items-center space-x-3">
-                <Phone className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                <div className="text-muted-foreground text-sm">
-                  +91 9845102493
+              
+              <div 
+                onClick={handlePhoneCall}
+                className="flex items-center space-x-3 cursor-pointer group"
+              >
+                <Phone className="h-4 w-4 text-muted-foreground flex-shrink-0 group-hover:text-primary transition-colors" />
+                <div className="text-muted-foreground text-sm group-hover:text-primary transition-colors">
+                  +1 (555) 123-4567
                 </div>
+                <ExternalLink className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                <div className="text-muted-foreground text-sm">
-                  karniinteriors9@gmail.com
+              
+              <div 
+                onClick={handleEmailClick}
+                className="flex items-center space-x-3 cursor-pointer group"
+              >
+                <Mail className="h-4 w-4 text-muted-foreground flex-shrink-0 group-hover:text-primary transition-colors" />
+                <div className="text-muted-foreground text-sm group-hover:text-primary transition-colors">
+                  hello@mkraftinteriors.com
                 </div>
+                <ExternalLink className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             </div>
           </div>
@@ -120,10 +143,11 @@ export default function Footer() {
 
         <div className="border-t border-border mt-12 pt-8 text-center">
           <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} Karni Interiors. All rights reserved.
+            © {new Date().getFullYear()} Mkraft Interiors. All rights reserved.
           </p>
         </div>
       </div>
     </footer>
   );
-}
+};
+export default Footer

@@ -27,6 +27,8 @@ export type ProjectFormData = z.infer<typeof ProjectSchema>;
 
 // Full Project type (e.g., from the database)
 export interface Project {
+  category: string;
+  category: string;
   id: string;
   title: string;
   description: string;

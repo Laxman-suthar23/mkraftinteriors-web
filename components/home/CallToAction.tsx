@@ -1,79 +1,71 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Phone, Mail } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export default function CallToAction() {
+export default function TransformSpaceCTA() {
   return (
-    <section className="section-padding bg-primary text-primary-foreground">
-      <div className="container">
+    <section className="py-20 bg-accent">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-4xl mx-auto"
+          transition={{ duration: 0.8 }}
+          className="text-center"
         >
-          <h2 className="heading-2 mb-6">
-            Ready to Build and Transform Your Space?
-          </h2>
-          <p className="text-xl mb-8 opacity-90">
-            Let’s bring your vision to reality. Schedule a consultation today and see how we can build the perfect space for you.
-          </p>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-4xl md:text-5xl font-bold text-accent-foreground mb-8"
+          >
+            Ready to Transform Your Space?
+          </motion.h2>
+          
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-xl text-accent-foreground/80 max-w-3xl mx-auto leading-relaxed mb-12"
+          >
+            Let's bring your vision to life. Contact us today for a free consultation and discover
+            how we can create the perfect space for you.
+          </motion.p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+          >
             <Link href="/contact">
-              <Button
-                size="lg"
+              <Button 
+                size="lg" 
                 variant="secondary"
-                className="w-full sm:w-auto"
+                className="bg-background text-foreground hover:bg-accent-foreground px-8 py-4 text-lg font-semibold rounded-full shadow-lg hover:text-accent transition-all duration-300"
               >
-                Start Your Project
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <Mail className="mr-2 h-5 w-5" />
+                Get Free Consultation
               </Button>
             </Link>
-            <Link href="/portfolio">
-              <Button
-                size="lg"
+
+            <Link href="tel:+1234567890">
+              <Button 
+                size="lg" 
                 variant="outline"
-                className="w-full sm:w-auto bg-transparent border-white/30 text-white hover:bg-white/10"
+                className="border-2 border-accent-foreground/20 text-foreground hover:bg-accent-foreground hover:text-accent px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300"
               >
-                View Our Work
+                <Phone className="mr-2 h-5 w-5" />
+                Call Us Today
               </Button>
             </Link>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex items-center justify-center space-x-3"
-            >
-              <Phone className="h-5 w-5" />
-              <div>
-                <div className="font-medium">Call Us</div>
-                <div className="text-sm opacity-90">+91 9845102493</div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex items-center justify-center space-x-3"
-            >
-              <Mail className="h-5 w-5" />
-              <div>
-                <div className="font-medium">Email Us</div>
-                <div className="text-sm opacity-90">karniinteriors9@gmail.com</div>
-              </div>
-            </motion.div>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

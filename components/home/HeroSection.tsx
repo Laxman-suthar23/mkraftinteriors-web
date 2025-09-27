@@ -82,28 +82,26 @@ export default function HeroSection() {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <h1 className="heading-1 text-white mb-6">
-                Building Spaces, 
+                Transform Your, 
                 <br />
-                <span className="text-primary-400 ">Shaping Dreams</span>
+                <span className="text-primary-400 ">Living Space</span>
               </h1>
               <p className="body-large text-white/90 mb-8 max-w-2xl">
-                Transform your space with our expert interior construction
-                services. We build beautiful, functional environments that
-                reflect your unique lifestyle and personality.
+                Creating extraordinary interiors that blend functionality with timeless elegance. Your dream space awaits.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/portfolio">
+                <Link href="/contact">
                   <Button size="lg" className="w-full sm:w-auto">
-                    View Our Work
+                    Start Your Project
                   </Button>
                 </Link>
-                <Link href="/contact">
+                <Link href="/portfolio">
                   <Button
                     variant="outline"
                     size="lg"
                     className="w-full sm:w-auto bg-white/10 border-white/30 text-white hover:bg-white/20"
                   >
-                    Start Your Project
+                    View Portfolio
                   </Button>
                 </Link>
               </div>

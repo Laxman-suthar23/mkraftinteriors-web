@@ -9,7 +9,6 @@ export default function Loading() {
           </div>
         </div>
       </div>
-      
       <div className="py-8 border-b">
         <div className="container">
           <div className="flex flex-col sm:flex-row gap-4">

@@ -13,12 +13,12 @@ export default function HomePage() {
     <>
       <Header />
       <HeroSection />
-      <FeaturedProjects />
       <AboutPreview />
       <ServicesOverview />
+      <FeaturedProjects />
       <TestimonialsPreview />
       <CallToAction />
-      <ClientsSectionHome />
+      {/* <ClientsSectionHome /> */}
       <Footer />
     </>
   );
