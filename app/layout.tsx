@@ -46,7 +46,7 @@ export const metadata: Metadata = {
       "Expert interior crafting services bringing designs to life. From concept to completion, we build beautiful, functional spaces with precision craftsmanship.",
     images: [
       {
-        url: "/images/og-mkraft-interiors.jpg",
+        url: "/images/about/logo.jpg",
         width: 1200,
         height: 630,
         alt: "Mkraft Interiors - Premium Interior Crafting & Construction",
