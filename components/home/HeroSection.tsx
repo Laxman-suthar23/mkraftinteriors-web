@@ -241,7 +241,7 @@ export const HeroSection = () => {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="btn-ghost text-amber-800 border-white hover:bg-white hover:text-primary"
+                  className="btn-ghost text-primary hover:bg-primary-foreground hover:text-primary"
                 >
                   View Portfolio
                 </Button>

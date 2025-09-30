@@ -1,15 +1,23 @@
 "use client";
-
-import Link from 'next/link';
-import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, ExternalLink } from 'lucide-react';
+import Image from "next/image";
+import Link from "next/link";
+import {
+  Facebook,
+  Instagram,
+  Twitter,
+  MapPin,
+  Phone,
+  Mail,
+  ExternalLink,
+} from "lucide-react";
 
 const Footer = () => {
   const handlePhoneCall = () => {
-    window.open('tel:+1234567890', '_self');
+    window.open("tel:+1234567890", "_self");
   };
 
   const handleEmailClick = () => {
-    window.open('mailto:hello@mkraftinteriors.com', '_blank');
+    window.open("mailto:hello@mkraftinteriors.com", "_blank");
   };
 
   return (
@@ -18,8 +26,18 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="text-2xl font-serif font-bold text-primary">
+            <div className="flex items-center align-baseline space-x-2">
+              <div className="w-10 pt-1 h-10 flex items-center justify-center">
+                <Image
+                  src="/images/about/Mkraft-logo.svg" // SVG format
+                  alt="Mkraft Interiors Logo"
+                  width={32}
+                  height={32}
+                  className="rounded-lg shadow-card hover-glow transition-all duration-300"
+                  priority={true}
+                />
+              </div>
+              <div className="text-2xl font-serif pt-1 font-bold text-primary">
                 Mkraft
               </div>
               <div className="text-2xl font-serif font-light text-foreground">
@@ -27,8 +45,9 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-muted-foreground text-sm">
-              Creating beautiful, functional spaces that reflect your unique style and personality. 
-              Transform your home with our expert interior services.
+              Creating beautiful, functional spaces that reflect your unique
+              style and personality. Transform your home with our expert
+              interior services.
             </p>
             <div className="flex space-x-4">
               <a
@@ -64,10 +83,9 @@ const Footer = () => {
             <div className="space-y-2">
               {[
                 { name: "Home", href: "/" },
-                { name: "About Us", href: "/about" },
+                { name: "About ", href: "/about" },
                 { name: "Services", href: "/services" },
                 { name: "Portfolio", href: "/portfolio" },
-                { name: "Gallery", href: "/gallery" },
                 { name: "Reviews", href: "/reviews" },
                 { name: "Contact", href: "/contact" },
               ].map((link) => (
@@ -88,7 +106,7 @@ const Footer = () => {
             <div className="space-y-2">
               {[
                 "Residential Design",
-                "Commercial Design", 
+                "Commercial Design",
                 "Space Planning",
                 "Color Consultation",
                 "Furniture Selection",
@@ -115,8 +133,8 @@ const Footer = () => {
                   City, State 12345
                 </div>
               </div>
-              
-              <div 
+
+              <div
                 onClick={handlePhoneCall}
                 className="flex items-center space-x-3 cursor-pointer group"
               >
@@ -126,8 +144,8 @@ const Footer = () => {
                 </div>
                 <ExternalLink className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
-              
-              <div 
+
+              <div
                 onClick={handleEmailClick}
                 className="flex items-center space-x-3 cursor-pointer group"
               >
@@ -150,4 +168,4 @@ const Footer = () => {
     </footer>
   );
 };
-export default Footer
+export default Footer;
