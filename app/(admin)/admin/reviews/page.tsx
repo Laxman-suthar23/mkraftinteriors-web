@@ -35,7 +35,9 @@ export default function AdminReviewsPage() {
   }, []);
 
   useEffect(() => {
-    let filtered = reviews;
+    // Ensure reviews is always an array
+    const reviewsArray = Array.isArray(reviews) ? reviews : [];
+    let filtered = reviewsArray;
 
     if (searchTerm) {
       filtered = filtered.filter(
@@ -53,10 +55,15 @@ export default function AdminReviewsPage() {
     try {
       const response = await fetch("/api/reviews");
       const data = await response.json();
-      setReviews(data);
-      setFilteredReviews(data);
+      
+      // Ensure data is always an array
+      const reviewsData = Array.isArray(data) ? data : [];
+      setReviews(reviewsData);
+      setFilteredReviews(reviewsData);
     } catch (error) {
       console.error("Error fetching reviews:", error);
+      setReviews([]);
+      setFilteredReviews([]);
     } finally {
       setLoading(false);
     }

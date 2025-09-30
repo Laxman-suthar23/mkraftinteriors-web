@@ -135,14 +135,32 @@ export default function NewReviewPage() {
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="project">Project Name</Label>
-                <Input
-                  id="project"
-                  {...register("project")}
-                  placeholder="Modern Living Room Renovation"
-                  disabled={isSubmitting}
-                />
+              <div className="grid md:grid-cols-2 gap-4">
+                {/* Phone */}
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    {...register("phone")}
+                    placeholder="+1 (555) 123-4567"
+                    disabled={isSubmitting}
+                  />
+                  {errors.phone && (
+                    <p className="text-sm text-red-500">{errors.phone.message}</p>
+                  )}
+                </div>
+
+                {/* Project Name */}
+                <div className="space-y-2">
+                  <Label htmlFor="project">Project Name</Label>
+                  <Input
+                    id="project"
+                    {...register("project")}
+                    placeholder="Modern Living Room"
+                    disabled={isSubmitting}
+                  />
+                </div>
               </div>
 
               {/* Rating */}

@@ -1,6 +1,9 @@
+import { Phone } from "lucide-react";
+import { ReactNode } from "react";
 import { z } from "zod";
 
 export interface Review {
+  phone: ReactNode;
   id: string;
   name: string;
   email: string; // New email field
@@ -22,6 +25,7 @@ export const ReviewSchema = z.object({
     .string()
     .email("Invalid email address")
     .max(255, "Email must be less than 255 characters"), // Email validation
+  phone: z.string().optional(),
   rating: z
     .number()
     .min(1, "Rating must be at least 1")

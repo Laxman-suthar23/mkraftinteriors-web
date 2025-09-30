@@ -132,10 +132,10 @@ export default function AdminReviewViewPage() {
                   <p className="text-muted-foreground">{review.name}</p>
                 </div>
                 
-                {review.project && (
+                {review.phone && (
                   <div>
-                    <label className="font-medium">Project</label>
-                    <p className="text-muted-foreground">{review.project}</p>
+                    <label className="font-medium">Phone</label>
+                    <p className="text-muted-foreground">{review.phone}</p>
                   </div>
                 )}
                 
