@@ -2,7 +2,19 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Star, Quote, Plus, Award, Users, ThumbsUp, MessageSquare, Send, Mail, User } from "lucide-react";
+import {
+  Star,
+  Quote,
+  Plus,
+  Award,
+  Users,
+  ThumbsUp,
+  MessageSquare,
+  Send,
+  Mail,
+  User,
+  Phone,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -29,6 +41,7 @@ export default function ReviewsPage() {
   const [form, setForm] = useState({
     name: "",
     email: "",
+    phone: "",
     rating: 0,
     review: "",
     projectId: "",
@@ -65,7 +78,14 @@ export default function ReviewsPage() {
       if (!res.ok) throw new Error("Failed to submit review");
 
       await fetchReviews();
-      setForm({ name: "", email: "", rating: 0, review: "", projectId: "" });
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        rating: 0,
+        review: "",
+        projectId: "",
+      });
       setOpen(false);
     } catch (err) {
       console.error(err);
@@ -170,6 +190,7 @@ export default function ReviewsPage() {
                   </span>
                 </div>
               )}
+
               <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                   <Button
@@ -180,29 +201,29 @@ export default function ReviewsPage() {
                     Share Your Experience
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-lg bg-card border-accent/20 shadow-2xl">
-                  <DialogHeader className="text-center pb-6">
-                    <div className="mx-auto w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mb-4">
-                      <Star className="h-8 w-8 text-accent" />
+                <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto bg-card border-accent/20 shadow-2xl">
+                  <DialogHeader className="text-center pb-4">
+                    <div className="mx-auto w-14 h-14 bg-accent/10 rounded-full flex items-center justify-center mb-3">
+                      <Star className="h-7 w-7 text-accent" />
                     </div>
                     <DialogTitle className="text-2xl font-bold text-foreground">
                       Share Your Experience
                     </DialogTitle>
-                    <p className="text-muted-foreground">
+                    <p className="text-sm text-muted-foreground">
                       Help others discover our craftsmanship through your review
                     </p>
                   </DialogHeader>
 
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-5">
                     {/* Personal Information */}
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-3">
                       <div className="space-y-2">
                         <label className="text-sm font-semibold text-foreground flex items-center">
                           <User className="h-4 w-4 mr-2 text-accent" />
                           Your Name
                         </label>
                         <Input
-                          placeholder="John Doe"
+                          placeholder="Name"
                           value={form.name}
                           onChange={(e) =>
                             setForm({ ...form, name: e.target.value })
@@ -211,21 +232,38 @@ export default function ReviewsPage() {
                           required
                         />
                       </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-semibold text-foreground flex items-center">
-                          <Mail className="h-4 w-4 mr-2 text-accent" />
-                          Email
-                        </label>
-                        <Input
-                          placeholder="john@example.com"
-                          type="email"
-                          value={form.email}
-                          onChange={(e) =>
-                            setForm({ ...form, email: e.target.value })
-                          }
-                          className="border-input/50 focus:border-accent transition-colors"
-                          required
-                        />
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="space-y-2">
+                          <label className="text-sm font-semibold text-foreground flex items-center">
+                            <Mail className="h-4 w-4 mr-2 text-accent" />
+                            Email
+                          </label>
+                          <Input
+                            placeholder="john@example.com"
+                            type="email"
+                            value={form.email}
+                            onChange={(e) =>
+                              setForm({ ...form, email: e.target.value })
+                            }
+                            className="border-input/50 focus:border-accent transition-colors"
+                            required
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-semibold text-foreground flex items-center">
+                            <Phone className="h-4 w-4 mr-2 text-accent" />
+                            Phone
+                          </label>
+                          <Input
+                            placeholder="9876543210"
+                            value={form.phone}
+                            onChange={(e) =>
+                              setForm({ ...form, phone: e.target.value })
+                            }
+                            className="border-input/50 focus:border-accent transition-colors"
+                            required
+                          />
+                        </div>
                       </div>
                     </div>
 
@@ -266,7 +304,7 @@ export default function ReviewsPage() {
                         onChange={(e) =>
                           setForm({ ...form, review: e.target.value })
                         }
-                        className="min-h-[120px] border-input/50 focus:border-accent transition-colors resize-none"
+                        className="min-h-[100px] border-input/50 focus:border-accent transition-colors resize-none"
                         required
                       />
                       <p className="text-xs text-muted-foreground text-right">
@@ -275,11 +313,11 @@ export default function ReviewsPage() {
                     </div>
 
                     {/* Submit Button */}
-                    <div className="pt-4">
+                    <div className="pt-2">
                       <Button
                         type="submit"
                         disabled={submitting}
-                        className="w-full h-12 bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 shadow-lg disabled:opacity-50 font-semibold"
+                        className="w-full h-11 bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 shadow-lg disabled:opacity-50 font-semibold"
                       >
                         {submitting ? (
                           <div className="flex items-center">

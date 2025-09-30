@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const ReviewSchema = z.object({
   name: z.string().min(1, "Name is required").max(100, "Name too long"),
+  phone: z.string(),
   rating: z
     .number()
     .min(1, "Rating must be at least 1")

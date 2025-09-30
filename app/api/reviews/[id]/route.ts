@@ -43,7 +43,8 @@ export async function PUT(request: NextRequest, { params }: Props) {
       where: { id: resolvedParams.id },
       data: {
         name: body.name,
-        email: body.email, // ✅ new field
+        email: body.email,
+        ...(body.phone && { phone: body.phone }),
         rating: body.rating,
         review: body.review,
         projectId: body.projectId || null,

@@ -74,13 +74,6 @@ const Contact = () => {
       action: 'Send Email',
       link: 'mailto:hello@mkraftinteriors.com',
     },
-    {
-      icon: Clock,
-      title: 'Business Hours',
-      details: ['Mon - Fri: 9:00 AM - 6:00 PM', 'Sat: 10:00 AM - 4:00 PM', 'Sun: By Appointment'],
-      action: 'Schedule Call',
-      link: 'tel:+919845102493',
-    },
   ];
 
   const services = [
@@ -185,7 +178,7 @@ const Contact = () => {
         </section>
 
         {/* Contact Form & Info */}
-        <section className="py-20" style={{ background: 'var(--gradient-subtle)' }}>
+        <section className="py-5" style={{ background: 'var(--gradient-subtle)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               {/* Contact Form */}

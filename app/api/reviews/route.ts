@@ -4,9 +4,8 @@ import { prisma } from "@/lib/prisma";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, rating, review, projectId } = body;
+    const { name, email, phone, rating, review, projectId } = body;
 
-    // Basic validation
     if (!name || !email || !rating || !review) {
       return NextResponse.json(
         { error: "Name, email, rating, and review are required" },
@@ -18,6 +17,7 @@ export async function POST(request: NextRequest) {
       data: {
         name,
         email,
+        phone,
         rating,
         review,
         projectId: projectId || null,
