@@ -35,9 +35,7 @@ export default function AdminReviewsPage() {
   }, []);
 
   useEffect(() => {
-    // Ensure reviews is always an array
-    const reviewsArray = Array.isArray(reviews) ? reviews : [];
-    let filtered = reviewsArray;
+    let filtered = reviews;
 
     if (searchTerm) {
       filtered = filtered.filter(
@@ -55,15 +53,10 @@ export default function AdminReviewsPage() {
     try {
       const response = await fetch("/api/reviews");
       const data = await response.json();
-      
-      // Ensure data is always an array
-      const reviewsData = Array.isArray(data) ? data : [];
-      setReviews(reviewsData);
-      setFilteredReviews(reviewsData);
+      setReviews(data);
+      setFilteredReviews(data);
     } catch (error) {
       console.error("Error fetching reviews:", error);
-      setReviews([]);
-      setFilteredReviews([]);
     } finally {
       setLoading(false);
     }
@@ -159,7 +152,7 @@ export default function AdminReviewsPage() {
                 <TableRow>
                   <TableHead>Client Name</TableHead>
                   <TableHead>Rating</TableHead>
-                  <TableHead>Project</TableHead>
+                  <TableHead>Phone</TableHead>
                   <TableHead>Review</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
@@ -183,8 +176,8 @@ export default function AdminReviewsPage() {
                       </div>
                     </TableCell>
                     <TableCell>
-                      {review.project || (
-                        <span className="text-muted-foreground">No project</span>
+                      {review.phone || (
+                        <span className="text-muted-foreground">No Phone</span>
                       )}
                     </TableCell>
                     <TableCell>
@@ -229,7 +222,6 @@ export default function AdminReviewsPage() {
           )}
         </CardContent>
       </Card>
-
       {/* Review Details Dialog */}
       <Dialog open={detailsDialogOpen} onOpenChange={setDetailsDialogOpen}>
         <DialogContent className="max-w-2xl">
@@ -256,12 +248,12 @@ export default function AdminReviewsPage() {
                     </span>
                   </div>
                 </div>
-                {selectedReview.project && (
+                {selectedReview.phone && (
                   <div>
                     <div className="text-sm font-medium text-muted-foreground mb-1">
-                      Project
+                      Phone
                     </div>
-                    <p className="text-lg">{selectedReview.project}</p>
+                    <p className="text-lg">{selectedReview.phone}</p>
                   </div>
                 )}
                 <div>
