@@ -11,6 +11,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Link from 'next/link';
 import ContactForm from '@/components/contact/ContactForm';
+import { Whatsapp } from "@/components/Watsappicon";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -56,16 +57,23 @@ const Contact = () => {
     {
       icon: MapPin,
       title: 'Visit Our Office',
-      details: ['Pune, Maharashtra', 'India - 411018'],
+      details: ['Pune, Maharashtra, India - 411018'],
       action: 'Get Directions',
-      link: 'https://maps.google.com/?q=Pimpri,Maharashtra,India',
+      link: 'https://goo.gl/maps/WF3Pe8x99ZUHLcYf9',
     },
     {
       icon: Phone,
       title: 'Call Us',
-      details: ['+91 98451 02493'],
+      details: ['+91 992290 7176'],
       action: 'Call Now',
-      link: 'tel:+919845102493',
+      link: 'tel:+919922907176',
+    },
+    {
+      icon: Whatsapp,
+      title: 'Watsapp Us',
+      details: ['+91 86009 07176'],
+      action: 'Wastapp Now',
+      link: 'https://wa.me/8600907176',
     },
     {
       icon: Mail,
@@ -88,7 +96,7 @@ const Contact = () => {
   return (
     <>
       <Header />
-      <main className="min-h-screen pt-16">
+      <main className="min-h-screen overflow-x-hidden pt-16">
         {/* Hero Section */}
         <section className="py-20" style={{ background: 'var(--gradient-hero)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

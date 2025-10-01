@@ -137,7 +137,7 @@ export default function AboutPreview() {
                 Design is how it works. We create spaces that work beautifully for your life."
               </blockquote>
               <footer className="mt-4">
-                <cite className="text-accent font-semibold">— Mkraft Interiors Team</cite>
+                <cite className="text-primary-foreground font-semibold">— Mkraft Interiors Team</cite>
               </footer>
             </div>
           </motion.div>

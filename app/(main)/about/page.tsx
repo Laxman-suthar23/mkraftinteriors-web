@@ -104,7 +104,7 @@ const About = () => {
   return (
     <>
     <Header/>
-    <div className="min-h-screen pt-16">
+    <div className="min-h-screen pt-16 overflow-x-hidden">
       {/* Hero Section */}
       <section className="py-20" style={{ background: 'var(--gradient-subtle)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

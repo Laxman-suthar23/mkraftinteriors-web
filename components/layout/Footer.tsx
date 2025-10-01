@@ -126,11 +126,13 @@ const Footer = () => {
               <div className="flex items-start space-x-3">
                 <MapPin className="h-4 w-4 text-muted-foreground mt-1 flex-shrink-0" />
                 <div className="text-muted-foreground text-sm">
-                  123 Design Street,
+                  Block No. 7, Gate No. 676,
                   <br />
-                  Creative District,
+                  Vishwakarma Industrial Estate,
                   <br />
-                  City, State 12345
+                  M.NO. 1037, Velu, Tal-Bhor
+                  <br />
+                  Dist.Pune , Maharashtra -412205
                 </div>
               </div>
 
@@ -140,7 +142,7 @@ const Footer = () => {
               >
                 <Phone className="h-4 w-4 text-muted-foreground flex-shrink-0 group-hover:text-primary transition-colors" />
                 <div className="text-muted-foreground text-sm group-hover:text-primary transition-colors">
-                  +1 (555) 123-4567
+                  +91 99229 07176
                 </div>
                 <ExternalLink className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>

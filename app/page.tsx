@@ -10,15 +10,17 @@ import ClientsSectionHome from "@/components/clients/page";
 
 export default function HomePage() {
   return (
-    <>
+     <>
       <Header />
-      <HeroSection />
-      <AboutPreview />
-      <ServicesOverview />
-      <FeaturedProjects />
-      <TestimonialsPreview />
-      <CallToAction />
-      {/* <ClientsSectionHome /> */}
+      <main className="overflow-x-hidden">
+        <HeroSection />
+        <AboutPreview />
+        <ServicesOverview />
+        <FeaturedProjects />
+        <TestimonialsPreview />
+        <CallToAction />
+        {/* <ClientsSectionHome /> */}
+      </main>
       <Footer />
     </>
   );
