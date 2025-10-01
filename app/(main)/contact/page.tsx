@@ -56,7 +56,7 @@ const Contact = () => {
     {
       icon: MapPin,
       title: 'Visit Our Office',
-      details: ['Pune, Maharashtra, India - 411018'],
+      details: ['Pune, Maharashtra, India - 412205'],
       action: 'Get Directions',
       link: 'https://goo.gl/maps/WF3Pe8x99ZUHLcYf9',
     },
