@@ -95,7 +95,7 @@ export default function ContactForm() {
               <Input
                 id="name"
                 {...register("name")}
-                placeholder="Your Name"
+                placeholder="Name"
                 disabled={isSubmitting}
               />
               {errors.name && (

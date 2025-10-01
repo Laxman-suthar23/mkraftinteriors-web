@@ -11,8 +11,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Link from 'next/link';
 import ContactForm from '@/components/contact/ContactForm';
-import { Whatsapp } from "@/components/Watsappicon";
-
+import { WhatsappIcon } from '@/components/Watsappicon';
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -69,7 +68,7 @@ const Contact = () => {
       link: 'tel:+919922907176',
     },
     {
-      icon: Whatsapp,
+      icon: WhatsappIcon,
       title: 'Watsapp Us',
       details: ['+91 86009 07176'],
       action: 'Wastapp Now',
