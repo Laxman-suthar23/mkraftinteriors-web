@@ -77,7 +77,7 @@ const Contact = () => {
     {
       icon: Mail,
       title: 'Email Us',
-      details: ['hello@mkraftinteriors.com','  '],
+      details: ['admin@mkraftinteriors.com','  '],
       action: 'Send Email',
       link: 'mailto:hello@mkraftinteriors.com',
     },

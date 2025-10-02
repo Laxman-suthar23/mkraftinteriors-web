@@ -28,25 +28,21 @@ export default function FeaturedProjects() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchFeaturedProjects = async () => {
+    const fetchProjects = async () => {
       try {
-        // Fetch first 3 featured projects from your database
-        const response = await fetch("/api/projects?featured=true&limit=3");
-        if (!response.ok) {
-          throw new Error('Failed to fetch projects');
-        }
+        const response = await fetch("/api/projects");
         const data = await response.json();
-        setProjects(data);
+        // Get first 3 projects (or filter featured if needed)
+        const featuredProjects = data.slice(0, 3);
+        setProjects(featuredProjects);
       } catch (error) {
-        console.error("Error fetching featured projects:", error);
-        // Fallback to empty array if API fails
-        setProjects([]);
+        console.error("Error fetching projects:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchFeaturedProjects();
+    fetchProjects();
   }, []);
 
   const containerVariants: Variants = {

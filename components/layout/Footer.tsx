@@ -153,7 +153,7 @@ const Footer = () => {
               >
                 <Mail className="h-4 w-4 text-muted-foreground flex-shrink-0 group-hover:text-primary transition-colors" />
                 <div className="text-muted-foreground text-sm group-hover:text-primary transition-colors">
-                  hello@mkraftinteriors.com
+                  admin@mkraftinteriors.com
                 </div>
                 <ExternalLink className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
