@@ -69,10 +69,16 @@ export default function ReviewsPage() {
     setSubmitting(true);
 
     try {
+      // Use default email if not provided
+      const submissionData = {
+        ...form,
+        email: form.email.trim() || 'noreply@example.com'
+      };
+
       const res = await fetch("/api/reviews", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(submissionData),
       });
 
       if (!res.ok) throw new Error("Failed to submit review");
@@ -236,7 +242,7 @@ export default function ReviewsPage() {
                         <div className="space-y-2">
                           <label className="text-sm font-semibold text-foreground flex items-center">
                             <Mail className="h-4 w-4 mr-2 text-accent" />
-                            Email
+                            Email <span className="text-muted-foreground text-xs ml-1">(optional)</span>
                           </label>
                           <Input
                             placeholder="john@example.com"
@@ -246,7 +252,6 @@ export default function ReviewsPage() {
                               setForm({ ...form, email: e.target.value })
                             }
                             className="border-input/50 focus:border-accent transition-colors"
-                            required
                           />
                         </div>
                         <div className="space-y-2">
@@ -261,6 +266,7 @@ export default function ReviewsPage() {
                               setForm({ ...form, phone: e.target.value })
                             }
                             className="border-input/50 focus:border-accent transition-colors"
+                            minLength={10}
                             required
                           />
                         </div>
