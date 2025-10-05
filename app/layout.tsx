@@ -127,6 +127,10 @@ const jsonLd = {
     "https://www.instagram.com/mkraftinteriors",
     "https://www.linkedin.com/company/mkraftinteriors",
   ],
+     // ... your existing metadata
+     verification: {
+       google: "google7c41143b4f9b2b84.html",
+     },
   description:
     "Premium interior design and construction services specializing in residential and commercial spaces with custom millwork and turnkey solutions.",
   aggregateRating: {
