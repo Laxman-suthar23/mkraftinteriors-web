@@ -135,8 +135,15 @@ const jsonLd = {
     "Premium interior design and construction services specializing in residential and commercial spaces with custom millwork and turnkey solutions.",
   aggregateRating: {
     "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "127", // Update with real data
+    ratingValue: "4.9", // ⚠️ Your average rating (1-5 scale)
+    bestRating: "5",
+    worstRating: "1",
+    reviewCount: "127", // ⚠️ Total number of reviews
+    // This links the rating to your business
+    itemReviewed: {
+      "@type": "LocalBusiness",
+      name: "Mkraft Interiors",
+    },
   },
   hasOfferCatalog: {
     "@type": "OfferCatalog",
