@@ -1,5 +1,5 @@
 /*
-karni-interiors/
+Mkraft-interiors/
 ├── README.md
 ├── next.config.js
 ├── package.json
