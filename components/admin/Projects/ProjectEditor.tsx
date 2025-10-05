@@ -235,7 +235,7 @@ export default function ProjectEditor({ project, onSuccess }: ProjectEditorProps
         <ImageUploader
           images={images}
           onImagesChange={setImages}
-          maxImages={10}
+          maxImages={50}
         />
         {images.length === 0 && (
           <p className="text-sm text-red-500">At least one image is required</p>
