@@ -17,6 +17,9 @@ export default function HomePage() {
         <AboutPreview />
         <ServicesOverview />
         <FeaturedProjects />
+
+
+        
         <TestimonialsPreview />
         <CallToAction />
         {/* <ClientsSectionHome /> */}

@@ -207,7 +207,8 @@ export const HeroSection = () => {
               className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight"
             >
               Transform Your
-              <span className="block text-gradient bg-gradient-accent bg-clip-text text-transparent">
+            
+              <span className="py-3 block text-gradient bg-gradient-accent bg-clip-text text-transparent">
                 Living Space
               </span>
             </motion.h1>
