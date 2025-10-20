@@ -69,7 +69,7 @@ const Contact = () => {
     },
     {
       icon: WhatsappIcon,
-      title: 'Watsapp Us',
+      title: 'Whatsapp Us',
       details: ['+91 86009 07176'],
       action: 'Whatsapp Now',
       link: 'https://wa.me/8600907176',
