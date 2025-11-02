@@ -68,8 +68,8 @@ export default function Header() {
             </div>
 
             <div className="flex pt-1 flex-row sm:items-baseline font-serif items-baseline space-x-2 sm:flex-row sm:space-x-2">
-              <span className="text-2xl font-bold text-foreground">Mkraft</span>
-              <span className="text-xl font-500  text-gradient">Interiors</span>
+              <span className="text-2xl font-bold text-red-700">Mkraft</span>
+              <span className="text-xl font-500  text-foreground">Interiors</span>
             </div>
           </Link>
 
