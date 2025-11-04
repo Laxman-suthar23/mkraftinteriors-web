@@ -357,7 +357,7 @@ export default function NewProjectPage() {
                 </div>
               </CardContent>
             </Card>
-
+            
             {/* Images */}
             <Card>
               <CardHeader>

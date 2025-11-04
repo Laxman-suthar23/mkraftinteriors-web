@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
 
     // Upload to Cloudinary
     const result = await cloudinary.uploader.upload(dataUri, {
-      folder: "karni-interiors",
+      folder: "Mkraft-interiors",
       resource_type: "auto",
       transformation: [
         { width: 1920, height: 1080, crop: "limit", quality: "auto" },
