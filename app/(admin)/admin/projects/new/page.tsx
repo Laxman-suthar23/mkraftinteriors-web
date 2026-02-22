@@ -19,12 +19,14 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ArrowLeft, Upload, X } from "lucide-react";
+import { ArrowLeft, Upload, X, Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { uploadService } from "@/lib/services/uploadService";
 
 export default function NewProjectPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
     null
   );
@@ -53,31 +55,25 @@ export default function NewProjectPage() {
   const featured = watch("featured");
   const type = watch("type");
 
-  // Fixed image upload handler
+  // Image upload handler — uploads directly to Cloudinary
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
 
-    console.log("🖼️ Uploading", files.length, "images");
+    setIsUploading(true);
+    setSubmitStatus(null);
+    setErrorMessage("");
 
     try {
-      // Upload all images in parallel
+      // Upload all images in parallel via Cloudinary
       const uploadPromises = files.map(async (file) => {
-        const formData = new FormData();
-        formData.append("file", file);
-
-        const res = await fetch("/api/upload", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!res.ok) {
-          console.error("❌ Upload failed for", file.name);
+        try {
+          const result = await uploadService.uploadImage(file);
+          return result.url;
+        } catch (err) {
+          console.error("❌ Upload failed for", file.name, err);
           return null;
         }
-
-        const { url } = await res.json();
-        return url as string;
       });
 
       // Wait for all to finish and filter out failures
@@ -85,19 +81,18 @@ export default function NewProjectPage() {
         Boolean
       ) as string[];
       if (newUrls.length === 0) {
-        console.error("❌ No images uploaded");
+        setSubmitStatus("error");
+        setErrorMessage("No images were uploaded. Please try again.");
         return;
       }
 
       // Append all new URLs at once
       setUploadedImages((prev) => {
         const all = [...prev, ...newUrls];
-        // Ensure mainImageIndex is valid (default to 0 if first upload)
         if (prev.length === 0) {
           setMainImageIndex(0);
         }
 
-        // Update form values
         setValue("images", all, { shouldValidate: true });
         setValue("mainImage", all[prev.length === 0 ? 0 : mainImageIndex], {
           shouldValidate: true,
@@ -106,7 +101,7 @@ export default function NewProjectPage() {
         return all;
       });
 
-      // Reset input safely - check if element exists first
+      // Reset input safely
       const inputElement = e.target;
       if (inputElement) {
         inputElement.value = "";
@@ -114,7 +109,11 @@ export default function NewProjectPage() {
     } catch (error) {
       console.error("❌ Error uploading images:", error);
       setSubmitStatus("error");
-      setErrorMessage("Failed to upload images. Please try again.");
+      setErrorMessage(
+        error instanceof Error ? error.message : "Failed to upload images. Please try again."
+      );
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -357,7 +356,7 @@ export default function NewProjectPage() {
                 </div>
               </CardContent>
             </Card>
-            
+
             {/* Images */}
             <Card>
               <CardHeader>
@@ -365,10 +364,21 @@ export default function NewProjectPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center">
-                  <Upload className="h-8 w-8 mx-auto mb-4 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Upload project images (JPG, PNG up to 10MB each)
-                  </p>
+                  {isUploading ? (
+                    <div className="flex flex-col items-center space-y-2">
+                      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                      <p className="text-sm text-muted-foreground">
+                        Uploading images to Cloudinary...
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      <Upload className="h-8 w-8 mx-auto mb-4 text-muted-foreground" />
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Upload project images (JPG, PNG up to 10MB each)
+                      </p>
+                    </>
+                  )}
                   <input
                     type="file"
                     accept="image/*"
@@ -376,6 +386,7 @@ export default function NewProjectPage() {
                     onChange={handleImageUpload}
                     hidden
                     id="image-upload"
+                    disabled={isUploading}
                   />
                   <Button
                     type="button"
@@ -383,8 +394,9 @@ export default function NewProjectPage() {
                       document.getElementById("image-upload")?.click()
                     }
                     variant="outline"
+                    disabled={isUploading}
                   >
-                    Choose Images
+                    {isUploading ? "Uploading..." : "Choose Images"}
                   </Button>
                 </div>
 

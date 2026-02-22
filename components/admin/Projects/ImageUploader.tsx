@@ -1,183 +1,499 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { useDropzone } from "react-dropzone";
-import Image from "next/image";
-import { X, Upload, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ProjectSchema, type ProjectFormData } from "@/types/project";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ArrowLeft, Upload, X, Loader2 } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 import { uploadService } from "@/lib/services/uploadService";
 
-interface ImageUploaderProps {
-  images: string[];
-  onImagesChange: (images: string[]) => void;
-  maxImages?: number;
-  className?: string;
-}
+export default function NewProjectPage() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
+    null
+  );
+  const [errorMessage, setErrorMessage] = useState("");
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  const [mainImageIndex, setMainImageIndex] = useState(0);
+  const router = useRouter();
 
-export default function ImageUploader({
-  images,
-  onImagesChange,
-  maxImages = 10,
-  className,
-}: ImageUploaderProps) {
-  const [uploading, setUploading] = useState(false);
-  const [uploadingCount, setUploadingCount] = useState(0);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+    getValues,
+  } = useForm<ProjectFormData>({
+    resolver: zodResolver(ProjectSchema),
+    defaultValues: {
+      featured: false,
+      type: "Residential",
+      images: [],
+      mainImage: "",
+    },
+  });
 
-  const onDrop = useCallback(
-    async (acceptedFiles: File[]) => {
-      if (images.length + acceptedFiles.length > maxImages) {
-        alert(`Maximum ${maxImages} images allowed`);
+  const featured = watch("featured");
+  const type = watch("type");
+
+  // Image upload handler — uploads directly to Cloudinary
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    setIsUploading(true);
+    setSubmitStatus(null);
+    setErrorMessage("");
+
+    try {
+      // Upload all images in parallel via Cloudinary
+      const uploadPromises = files.map(async (file) => {
+        try {
+          const result = await uploadService.uploadImage(file);
+          return result.url;
+        } catch (err) {
+          console.error("❌ Upload failed for", file.name, err);
+          return null;
+        }
+      });
+
+      // Wait for all to finish and filter out failures
+      const newUrls = (await Promise.all(uploadPromises)).filter(
+        Boolean
+      ) as string[];
+      if (newUrls.length === 0) {
+        setSubmitStatus("error");
+        setErrorMessage("No images were uploaded. Please try again.");
         return;
       }
 
-      setUploading(true);
-      setUploadingCount(acceptedFiles.length);
+      // Append all new URLs at once
+      setUploadedImages((prev) => {
+        const all = [...prev, ...newUrls];
+        if (prev.length === 0) {
+          setMainImageIndex(0);
+        }
 
-      try {
-        const uploadPromises = acceptedFiles.map(async (file) => {
-          const validation = uploadService.validateImageFile(file);
-          if (!validation.valid) {
-            throw new Error(validation.error);
-          }
-          return uploadService.uploadImage(file);
+        setValue("images", all, { shouldValidate: true });
+        setValue("mainImage", all[prev.length === 0 ? 0 : mainImageIndex], {
+          shouldValidate: true,
         });
 
-        const results = await Promise.all(uploadPromises);
-        const newImageUrls = results.map(result => result.url);
-        onImagesChange([...images, ...newImageUrls]);
-      } catch (error) {
-        console.error("Upload failed:", error);
-        alert("Failed to upload images. Please try again.");
-      } finally {
-        setUploading(false);
-        setUploadingCount(0);
+        return all;
+      });
+
+      // Reset input safely
+      const inputElement = e.target;
+      if (inputElement) {
+        inputElement.value = "";
       }
-    },
-    [images, maxImages, onImagesChange]
-  );
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: {
-      'image/*': ['.jpeg', '.jpg', '.png', '.webp']
-    },
-    multiple: true,
-    disabled: uploading,
-  });
-
-  const removeImage = (index: number) => {
-    const newImages = images.filter((_, i) => i !== index);
-    onImagesChange(newImages);
+    } catch (error) {
+      console.error("❌ Error uploading images:", error);
+      setSubmitStatus("error");
+      setErrorMessage(
+        error instanceof Error ? error.message : "Failed to upload images. Please try again."
+      );
+    } finally {
+      setIsUploading(false);
+    }
   };
 
-  const moveImage = (fromIndex: number, toIndex: number) => {
-    const newImages = [...images];
-    const [movedImage] = newImages.splice(fromIndex, 1);
-    newImages.splice(toIndex, 0, movedImage);
-    onImagesChange(newImages);
+  const removeImage = (index: number) => {
+    const updatedImages = uploadedImages.filter((_, i) => i !== index);
+    setUploadedImages(updatedImages);
+    setValue("images", updatedImages, { shouldValidate: true });
+
+    if (mainImageIndex === index) {
+      // Reset main image if removed
+      const newMainIndex = updatedImages.length > 0 ? 0 : -1;
+      setMainImageIndex(newMainIndex);
+      setValue("mainImage", updatedImages[newMainIndex] || "", {
+        shouldValidate: true,
+      });
+    } else if (mainImageIndex > index) {
+      setMainImageIndex((prev) => prev - 1);
+    }
+  };
+
+  const handleSetMainImage = (index: number) => {
+    setMainImageIndex(index);
+    setValue("mainImage", uploadedImages[index], { shouldValidate: true });
+  };
+
+  const onSubmit = async (data: ProjectFormData) => {
+    if (uploadedImages.length === 0) {
+      setSubmitStatus("error");
+      setErrorMessage(
+        "Please upload at least one image before creating the project."
+      );
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+    setErrorMessage("");
+
+    try {
+      const projectData = {
+        ...data,
+        images: uploadedImages,
+        mainImage: uploadedImages[mainImageIndex] || uploadedImages[0],
+      };
+
+      console.log("📤 Submitting project data:", projectData);
+
+      const response = await fetch("/api/projects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(projectData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          errorData.error || `Request failed with status ${response.status}`
+        );
+      }
+
+      const result = await response.json();
+      console.log("✅ Project created successfully:", result);
+
+      setSubmitStatus("success");
+      setErrorMessage("");
+
+      setTimeout(() => {
+        router.push("/admin/projects");
+      }, 2000);
+    } catch (error) {
+      console.error("❌ Error creating project:", error);
+      setSubmitStatus("error");
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Unknown error occurred while creating the project"
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className={className}>
-      {/* Upload Dropzone */}
-      <Card className="mb-6">
-        <CardContent className="p-6">
-          <div
-            {...getRootProps()}
-            className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
-              isDragActive
-                ? "border-primary bg-primary/5"
-                : "border-muted-foreground/25 hover:border-primary/50"
-            } ${uploading ? "pointer-events-none opacity-50" : ""}`}
-          >
-            <input {...getInputProps()} />
-            
-            {uploading ? (
-              <div className="flex flex-col items-center space-y-2">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                <p className="text-sm text-muted-foreground">
-                  Uploading {uploadingCount} image{uploadingCount !== 1 ? 's' : ''}...
-                </p>
-              </div>
-            ) : (
-              <div className="flex flex-col items-center space-y-2">
-                <Upload className="h-8 w-8 text-muted-foreground" />
-                <p className="text-sm text-muted-foreground">
-                  {isDragActive
-                    ? "Drop images here..."
-                    : "Drag & drop images here, or click to select"}
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Support: JPG, PNG, WebP (Max 10MB each)
-                </p>
-              </div>
-            )}
-          </div>
-          
-          <div className="mt-4 text-center">
-            <p className="text-sm text-muted-foreground">
-              {images.length} / {maxImages} images uploaded
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center space-x-4">
+        <Link href="/admin/projects">
+          <Button variant="ghost" size="sm">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Projects
+          </Button>
+        </Link>
+        <div>
+          <h1 className="text-3xl font-bold">Add New Project</h1>
+          <p className="text-muted-foreground">
+            Create a new interior design project
+          </p>
+        </div>
+      </div>
 
-      {/* Image Grid */}
-      {images.length > 0 && (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {images.map((image, index) => (
-            <Card key={index} className="relative group overflow-hidden">
-              <div className="aspect-square relative">
-                <Image
-                  src={image}
-                  alt={`Upload ${index + 1}`}
-                  fill
-                  className="object-cover"
-                />
-                
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center space-x-2">
-                  {index > 0 && (
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      onClick={() => moveImage(index, index - 1)}
+      {/* Form */}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+        {/* Hidden fields to make RHF aware of them */}
+        <input type="hidden" {...register("type")} value={type} />
+        <input
+          type="hidden"
+          {...register("featured")}
+          value={featured?.toString() || "false"}
+        />
+
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Main Section */}
+          <div className="lg:col-span-2 space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Basic Information</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {submitStatus === "success" && (
+                  <Alert className="bg-green-50 border-green-200">
+                    <AlertDescription className="text-green-800">
+                      Project created successfully! Redirecting...
+                    </AlertDescription>
+                  </Alert>
+                )}
+                {submitStatus === "error" && (
+                  <Alert variant="destructive">
+                    <AlertDescription>
+                      {errorMessage ||
+                        "There was an error creating the project."}
+                    </AlertDescription>
+                  </Alert>
+                )}
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="title">Project Title *</Label>
+                    <Input
+                      id="title"
+                      {...register("title")}
+                      placeholder="Modern Luxury Villa"
+                    />
+                    {errors.title && (
+                      <p className="text-sm text-red-500">
+                        {errors.title.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="type">Project Type *</Label>
+                    <Select
+                      value={type}
+                      onValueChange={(value) =>
+                        setValue(
+                          "type",
+                          value as "Residential" | "Commercial" | "Hospitality"
+                        )
+                      }
                     >
-                      ←
-                    </Button>
-                  )}
-                  
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={() => removeImage(index)}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                  
-                  {index < images.length - 1 && (
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      onClick={() => moveImage(index, index + 1)}
-                    >
-                      →
-                    </Button>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select project type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Residential">Residential</SelectItem>
+                        <SelectItem value="Commercial">Commercial</SelectItem>
+                        <SelectItem value="Hospitality">Hospitality</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.type && (
+                      <p className="text-sm text-red-500">
+                        {errors.type.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="location">Location *</Label>
+                    <Input
+                      id="location"
+                      {...register("location")}
+                      placeholder="Beverly Hills, CA"
+                    />
+                    {errors.location && (
+                      <p className="text-sm text-red-500">
+                        {errors.location.message}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <Label htmlFor="client">Client *</Label>
+                    <Input
+                      id="client"
+                      {...register("client")}
+                      placeholder="Private Residence"
+                    />
+                    {errors.client && (
+                      <p className="text-sm text-red-500">
+                        {errors.client.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="date">Completion Date *</Label>
+                  <Input id="date" type="date" {...register("date")} />
+                  {errors.date && (
+                    <p className="text-sm text-red-500">
+                      {errors.date.message}
+                    </p>
                   )}
                 </div>
 
-                {/* Main Image Badge */}
-                {index === 0 && (
-                  <div className="absolute top-2 left-2 bg-primary text-primary-foreground px-2 py-1 rounded text-xs font-medium">
-                    Main
+                <div>
+                  <Label htmlFor="description">Short Description *</Label>
+                  <Textarea
+                    id="description"
+                    {...register("description")}
+                    rows={3}
+                    placeholder="Brief description of the project..."
+                  />
+                  {errors.description && (
+                    <p className="text-sm text-red-500">
+                      {errors.description.message}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <Label htmlFor="fullDescription">Full Description</Label>
+                  <Textarea
+                    id="fullDescription"
+                    {...register("fullDescription")}
+                    rows={6}
+                    placeholder="Detailed description of the project, design approach, materials used, etc..."
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Images */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Project Images</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center">
+                  {isUploading ? (
+                    <div className="flex flex-col items-center space-y-2">
+                      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                      <p className="text-sm text-muted-foreground">
+                        Uploading images to Cloudinary...
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      <Upload className="h-8 w-8 mx-auto mb-4 text-muted-foreground" />
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Upload project images (JPG, PNG up to 10MB each)
+                      </p>
+                    </>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleImageUpload}
+                    hidden
+                    id="image-upload"
+                    disabled={isUploading}
+                  />
+                  <Button
+                    type="button"
+                    onClick={() =>
+                      document.getElementById("image-upload")?.click()
+                    }
+                    variant="outline"
+                    disabled={isUploading}
+                  >
+                    {isUploading ? "Uploading..." : "Choose Images"}
+                  </Button>
+                </div>
+
+                {uploadedImages.length > 0 && (
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {uploadedImages.map((image, index) => (
+                      <div key={index} className="relative group">
+                        <div className="relative aspect-square rounded-lg overflow-hidden">
+                          <Image
+                            src={image}
+                            alt={`Upload ${index + 1}`}
+                            fill
+                            sizes="200px"
+                            className="object-cover"
+                          />
+                          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                            <Button
+                              type="button"
+                              variant="destructive"
+                              size="sm"
+                              onClick={() => removeImage(index)}
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                          {index === mainImageIndex && (
+                            <div className="absolute top-2 left-2 bg-primary text-primary-foreground px-2 py-1 rounded text-xs font-medium">
+                              Main
+                            </div>
+                          )}
+                        </div>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          className="w-full mt-2"
+                          onClick={() => handleSetMainImage(index)}
+                          disabled={index === mainImageIndex}
+                        >
+                          {index === mainImageIndex
+                            ? "Main Image"
+                            : "Set as Main"}
+                        </Button>
+                      </div>
+                    ))}
                   </div>
                 )}
-              </div>
+
+                {errors.images && (
+                  <p className="text-sm text-red-500">
+                    {errors.images.message}
+                  </p>
+                )}
+              </CardContent>
             </Card>
-          ))}
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Publish Settings</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="featured">Featured Project</Label>
+                  <Switch
+                    id="featured"
+                    checked={featured}
+                    onCheckedChange={(checked) => setValue("featured", checked)}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="pt-6 space-y-4">
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={isSubmitting || uploadedImages.length === 0}
+                >
+                  {isSubmitting ? "Creating..." : "Create Project"}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  asChild
+                >
+                  <Link href="/admin/projects">Cancel</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      )}
+      </form>
     </div>
   );
 }
