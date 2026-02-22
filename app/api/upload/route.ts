@@ -3,7 +3,9 @@
 // Disable Next.js default JSON body parser for multipart/form-data
 export const config = {
   api: {
-    bodyParser: false,
+    bodyParser: {
+      sizeLimit: "10mb",
+    },
   },
 };
 
